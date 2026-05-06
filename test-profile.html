@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unidad de Seguros – RSVM | Guía FUA MaPCS</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #1a3a6b;
+  --azul2: #1a56db;
+  --azul3: #2563eb;
+  --dorado: #b8960c;
+  --dorado2: #d4af37;
+  --verde: #15803d;
+  --naranja: #c2410c;
+  --morado: #7c3aed;
+  --rosa: #be185d;
+  --gris: #f1f5f9;
+  --gris2: #e2e8f0;
+  --texto: #0f172a;
+  --texto2: #475569;
+  --radio: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "DM Sans", sans-serif; background: #eef2f7; color: var(--texto); }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0f2352 0%, #1a3a6b 45%, #1a56db 100%);
+  color: white; padding: 16px 24px 14px;
+  display: flex; align-items: center; gap: 20px;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.25);
+  position: sticky; top: 0; z-index: 100;
+}
+.header-logo img {
+  height: 100px; /* Ajusta la altura a tu gusto */
+  width: auto;
+  display: block;
+}
+
+.logo-wrap {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: white; overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.6), 0 3px 12px rgba(0,0,0,0.3);
+}
+.logo-wrap img { width: 66px; height: 66px; object-fit: cover; border-radius: 50%; }
+.header-info h1 {
+  font-family: "Nunito", sans-serif; font-size: 18px; font-weight: 900;
+  letter-spacing: -0.3px; line-height: 1.2;
+}
+.header-info .sub { font-size: 11.5px; opacity: 0.82; margin-top: 2px; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.badge {
+  padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  color: white; letter-spacing: 0.1px;
+}
+.badge.gold { background: rgba(212,175,55,0.25); border-color: var(--dorado2); color: #fde68a; }
+.badge.mapcs { background: #fbbf24; border-color: #f59e0b; color: #78350f; font-size: 12px; }
+
+/* NAV TABS */
+.nav-tabs {
+  background: var(--azul); display: flex; gap: 2px;
+  padding: 0 24px; overflow-x: auto;
+}
+.nav-tab {
+  padding: 10px 18px; font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.65); cursor: pointer; white-space: nowrap;
+  border-bottom: 3px solid transparent; transition: all 0.15s;
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.nav-tab:hover { color: white; }
+.nav-tab.active { color: #fbbf24; border-bottom-color: #fbbf24; }
+
+/*botones url */
+.nav-container {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; 
+}
+
+.nav-pest {
+  padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  color: white; letter-spacing: 0.1px;
+}
+
+.nav-pest:hover {
+  background-color: #fcc309;
+}
+
+.nav-pest.active {
+  background-color: #0056b3; /* Color azul institucional */
+  color: white;
+}
+
+/* MAIN */
+.main { max-width: 1000px; margin: 0 auto; padding: 24px 16px 50px; }
+
+/* SECTION */
+.section { display: none; }
+.section.active { display: block; }
+
+/* CARDS GRID */
+.cards-grid { display: grid; gap: 14px; }
+.g2 { grid-template-columns: repeat(2, 1fr); }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 640px) { .g4, .g3, .g2 { grid-template-columns: repeat(2,1fr); } }
+
+/* NIVEL CARD */
+.nivel-card {
+  background: white; border-radius: var(--radio); padding: 18px 14px 14px;
+  border: 2.5px solid transparent; cursor: pointer; text-align: center;
+  transition: transform 0.14s, box-shadow 0.14s, border-color 0.14s;
+}
+.nivel-card:hover { transform: translateY(-2px); box-shadow: 0 5px 18px rgba(0,0,0,0.10); }
+.nivel-card.active { box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+.nivel-card .num { font-family:"Nunito",sans-serif; font-size:28px; font-weight:900; margin-bottom:3px; }
+.nivel-card .tipo { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; opacity:0.65; margin-bottom:5px; }
+.nivel-card .desc { font-size:11.5px; color:var(--texto2); line-height:1.4; margin-bottom:12px; }
+.nivel-card button { font-size:11px; font-weight:700; padding:5px 14px; border-radius:20px; border:1.5px solid; cursor:pointer; background:transparent; transition:all 0.14s; }
+
+.ni1 { border-color:#bfdbfe; } .ni1 .num { color:#1d4ed8; } .ni1 button { border-color:#3b82f6; color:#1d4ed8; } .ni1 button:hover,.ni1.active button { background:#3b82f6; color:white; } .ni1.active { border-color:#3b82f6; background:#eff6ff; }
+.ni2 { border-color:#bbf7d0; } .ni2 .num { color:#15803d; } .ni2 button { border-color:#22c55e; color:#15803d; } .ni2 button:hover,.ni2.active button { background:#22c55e; color:white; } .ni2.active { border-color:#22c55e; background:#f0fdf4; }
+.ni3 { border-color:#fed7aa; } .ni3 .num { color:#c2410c; } .ni3 button { border-color:#f97316; color:#c2410c; } .ni3 button:hover,.ni3.active button { background:#f97316; color:white; } .ni3.active { border-color:#f97316; background:#fff7ed; }
+.ni4 { border-color:#e9d5ff; } .ni4 .num { color:#7c3aed; } .ni4 button { border-color:#8b5cf6; color:#7c3aed; } .ni4 button:hover,.ni4.active button { background:#8b5cf6; color:white; } .ni4.active { border-color:#8b5cf6; background:#f5f3ff; }
+
+/* DETAIL PANEL */
+.detail-panel {
+  background: white; border-radius: var(--radio); padding: 20px 22px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  border-left: 4px solid #3b82f6; margin-top: 14px;
+  animation: fadeIn 0.2s ease;
+}
+.detail-col h3 { font-family:"Nunito",sans-serif; font-size:14px; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.detail-col.ok h3 { color:#15803d; }
+.detail-col.no h3 { color:#b91c1c; }
+.detail-col ul { list-style:none; }
+.detail-col ul li { font-size:12.5px; padding:5px 0; display:flex; align-items:flex-start; gap:7px; border-bottom:1px solid #f1f5f9; line-height:1.4; }
+.detail-col ul li::before { content:"•"; font-size:16px; flex-shrink:0; margin-top:1px; }
+.detail-col.ok li::before { color:#22c55e; }
+.detail-col.no li::before { color:#ef4444; }
+@media (max-width:640px) { .detail-panel { grid-template-columns:1fr; } }
+
+/* CODIGO CARD */
+.cod-card {
+  background: white; border-radius: var(--radio); padding:16px 14px 14px;
+  border: 2.5px solid transparent; cursor: pointer; text-align:center;
+  transition: transform 0.14s, box-shadow 0.14s;
+}
+.cod-card:hover { transform:translateY(-2px); box-shadow:0 5px 16px rgba(0,0,0,0.10); }
+.cod-card .cnum { font-family:"Nunito",sans-serif; font-size:34px; font-weight:900; line-height:1; margin-bottom:5px; }
+.cod-card .cnombre { font-size:12.5px; font-weight:700; margin-bottom:3px; }
+.cod-card .crango { font-size:11px; color:var(--texto2); margin-bottom:12px; }
+.cod-card button { font-size:11px; font-weight:700; padding:5px 14px; border-radius:20px; border:1.5px solid; cursor:pointer; background:transparent; transition:all 0.14s; }
+
+.c301{border-color:#bfdbfe;} .c301 .cnum{color:#1d4ed8;} .c301 button{border-color:#3b82f6;color:#1d4ed8;} .c301 button:hover{background:#3b82f6;color:white;}
+.c302{border-color:#bbf7d0;} .c302 .cnum{color:#15803d;} .c302 button{border-color:#22c55e;color:#15803d;} .c302 button:hover{background:#22c55e;color:white;}
+.c303{border-color:#d1fae5;} .c303 .cnum{color:#065f46;} .c303 button{border-color:#10b981;color:#065f46;} .c303 button:hover{background:#10b981;color:white;}
+.c304{border-color:#fed7aa;} .c304 .cnum{color:#c2410c;} .c304 button{border-color:#f97316;color:#c2410c;} .c304 button:hover{background:#f97316;color:white;}
+.c305{border-color:#e9d5ff;} .c305 .cnum{color:#7c3aed;} .c305 button{border-color:#8b5cf6;color:#7c3aed;} .c305 button:hover{background:#8b5cf6;color:white;}
+.c306{border-color:#fce7f3;} .c306 .cnum{color:#be185d;} .c306 button{border-color:#ec4899;color:#be185d;} .c306 button:hover{background:#ec4899;color:white;}
+
+/* SELECTOR PROF */
+.card { background:white; border-radius:var(--radio); padding:20px; margin-bottom:16px; }
+.card-title { font-family:"Nunito",sans-serif; font-size:14px; font-weight:800; color:var(--azul); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.prof-tags { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
+.ptag { padding:6px 14px; border-radius:20px; font-size:12.5px; font-weight:600; cursor:pointer; border:1.5px solid var(--gris2); background:var(--gris); color:var(--texto2); transition:all 0.14s; }
+.ptag:hover { background:var(--azul2); color:white; border-color:var(--azul2); }
+.ptag.active { background:var(--azul2); color:white; border-color:var(--azul2); }
+
+/* PROF PANEL */
+.prof-panel { background:linear-gradient(135deg,#0f2352 0%,#1a56db 100%); border-radius:10px; padding:16px 18px; color:white; display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+.prof-av { width:44px; height:44px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:"Nunito",sans-serif; font-weight:900; font-size:14px; flex-shrink:0; }
+.prof-panel h3 { font-family:"Nunito",sans-serif; font-size:15px; font-weight:800; }
+.prof-panel p { font-size:11.5px; opacity:0.82; margin-top:3px; }
+
+.aviso { background:#fffbeb; border:1.5px solid #fbbf24; border-radius:8px; padding:9px 14px; font-size:12.5px; color:#92400e; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.aviso .dot { width:8px; height:8px; background:#f59e0b; border-radius:50%; flex-shrink:0; }
+
+/* ACCORDION */
+.acc { margin-bottom:8px; }
+.acc-h { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-radius:10px; cursor:pointer; font-weight:700; font-size:13.5px; transition:filter 0.14s; }
+.acc-h:hover { filter:brightness(0.95); }
+.acc-h .arr { font-size:12px; transition:transform 0.2s; }
+.acc-h.open .arr { transform:rotate(180deg); }
+.acc-b { background:white; border-radius:0 0 10px 10px; max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.acc-b.open { max-height:600px; }
+.acc-inner { padding:14px 16px; }
+
+/* TABLE */
+.tbl { width:100%; border-collapse:collapse; font-size:12px; }
+.tbl th { background:#f1f5f9; padding:7px 10px; text-align:left; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:0.4px; color:var(--texto2); border-bottom:2px solid #e2e8f0; }
+.tbl td { padding:6px 10px; border-bottom:1px solid #f1f5f9; vertical-align:top; line-height:1.4; }
+.tbl tr:hover td { background:#f8fafc; }
+.tbl td:first-child { font-weight:700; color:var(--azul2); white-space:nowrap; font-size:11.5px; }
+.tag { display:inline-block; padding:2px 8px; border-radius:12px; font-size:10.5px; font-weight:700; }
+.tag-a { background:#eff6ff; color:#1d4ed8; }
+.tag-f { background:#fce7f3; color:#be185d; }
+.tag-m { background:#eff6ff; color:#1d4ed8; }
+.tag-ok { background:#f0fdf4; color:#15803d; }
+.tag-no { background:#fef2f2; color:#b91c1c; }
+.tag-x { background:#f0fdf4; color:#15803d; font-weight:900; }
+
+/* RC TABLE */
+.rc-section { margin-bottom:20px; }
+.rc-title { font-family:"Nunito",sans-serif; font-size:14px; font-weight:800; color:var(--azul); background:#eff6ff; border-left:4px solid var(--azul2); padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:10px; }
+.rc-obj { font-size:12px; color:var(--texto2); margin-bottom:10px; padding:0 4px; font-style:italic; }
+
+/* REGLAS ORO */
+.gold-box { background:#fffbeb; border:2px solid #fbbf24; border-radius:var(--radio); padding:18px 20px; }
+.gold-box h3 { font-family:"Nunito",sans-serif; font-size:14px; font-weight:800; color:#92400e; margin-bottom:12px; }
+.regla { display:flex; align-items:flex-start; gap:10px; margin-bottom:9px; font-size:12.5px; color:#78350f; line-height:1.5; }
+.rnum { width:22px; height:22px; background:#f59e0b; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+
+/* SECCION LABEL */
+.sec-label { display:flex; align-items:center; gap:8px; font-family:"Nunito",sans-serif; font-size:14px; font-weight:800; color:var(--azul); margin-bottom:14px; padding:0 2px; }
+
+/* FOOTER */
+.footer { background:var(--azul); color:rgba(255,255,255,0.7); font-size:11.5px; padding:12px 20px; text-align:center; border-radius:10px; margin-top:12px; }
+.footer strong { color:white; }
+
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+.fade { animation:fadeIn 0.22s ease; }
+
+/* SEARCH */
+.search-wrap { position:relative; margin-bottom:14px; }
+.search-wrap input { width:100%; padding:10px 16px 10px 38px; border-radius:10px; border:1.5px solid var(--gris2); font-size:13px; background:white; outline:none; }
+.search-wrap input:focus { border-color:var(--azul2); }
+.search-wrap .icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:14px; opacity:0.5; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <img src="img/USlogos.png" alt="Logo Unidad de Seguros">
+  </div>
+  <div class="header-info">
+    <h1>Unidad de Seguros – Red de Salud Valle del Mantaro</h1>
+    <div class="sub">Guía de Registro FUA | Prestaciones Modulares por Curso de Vida | RG N.° 000002-2026-SIS/GREP</div>
+    
+    <nav class="nav-container">
+      <a href="Digitador.html" class="nav-pest">Niveles IPRESS</a>
+      <a href="DIPRO.html" class="nav-pest">Códigos 301–306</a>
+      <!-- Nuevo menú de pestañas agregado debajo -->
+      <div class="badges">
+        <span class="badge gold">MaPCS, Por servicio y profesión, Códigos 301 al 306, Realizar 1 FUA = 1 profesional, Sin tope de atenciones, Vigente desde 01/03/2026</span>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showSection('niveles',this)">🏥 Niveles IPRESS</button>
+  <button class="nav-tab" onclick="showSection('codigos',this)">📋 Códigos 301–306</button>
+  <button class="nav-tab" onclick="showSection('profesiones',this)">👤 Por Profesión</button>
+  <button class="nav-tab" onclick="showSection('rc',this)">⚙ Reglas de Consistencia</button>
+  <button class="nav-tab" onclick="showSection('procedimientos',this)">🔬 Procedimientos CPMS</button>
+<!-- se unio a nivel1--<button class="nav-tab" onclick="showSection('reglas',this)">⭐ Reglas de Oro</button> -->
+
+</div>
+
+<div class="main">
+
+<!-- ===== SECCION 1: NIVELES ===== -->
+<!-- ===== SECCION 1: NIVELES Y REGLAS (UNIFICADA) ===== -->
+<div class="section active fade" id="sec-niveles">
+  
+  <!-- Parte A: Interactividad de Niveles -->
+  <div class="sec-label">🏥 Prestaciones por Nivel de Establecimiento — clic para ver detalle</div>
+  <div class="cards-grid g4">
+    <div class="nivel-card ni1 active" onclick="selectNivel(1,this)">
+      <div class="num">I-1</div>
+      <div class="tipo">Puesto de Salud</div>
+      <div class="desc">Sin médico. Solo personal técnico y/o enfermería.</div>
+      <button>Ver prestaciones</button>
+    </div>
+    <div class="nivel-card ni2" onclick="selectNivel(2,this)">
+      <div class="num">I-2</div>
+      <div class="tipo">Puesto de Salud</div>
+      <div class="desc">Con médico. Atención médica básica permanente.</div>
+      <button>Ver prestaciones</button>
+    </div>
+    <div class="nivel-card ni3" onclick="selectNivel(3,this)">
+      <div class="num">I-3</div>
+      <div class="tipo">Centro de Salud</div>
+      <div class="desc">Sin internamiento. Varios profesionales de salud.</div>
+      <button>Ver prestaciones</button>
+    </div>
+    <div class="nivel-card ni4" onclick="selectNivel(4,this)">
+      <div class="num">I-4</div>
+      <div class="tipo">Centro de Salud</div>
+      <div class="desc">Con internamiento. Mayor capacidad resolutiva.</div>
+      <button>Ver prestaciones</button>
+    </div>
+  </div>
+
+  <div class="detail-panel fade" id="nivel-panel">
+    <div class="detail-col ok">
+      <h3>✅ Puede registrar</h3>
+      <ul id="puede-list"></ul>
+    </div>
+    <div class="detail-col no">
+      <h3>🚫 No puede / debe referir</h3>
+      <ul id="nopuede-list"></ul>
+    </div>
+  </div>
+
+  <!-- Parte B: Tabla de Códigos por Nivel -->
+  <div style="margin-top:20px;">
+    <div class="sec-label" style="font-size:13px;">📊 RC-92: Códigos 301–306 autorizados por nivel (todos aplican I-1 a I-4)</div>
+    <div class="card">
+      <table class="tbl">
+        <thead>
+          <tr><th>Código</th><th>Prestación</th><th>I-1</th><th>I-2</th><th>I-3</th><th>I-4</th><th>II+</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>301</td><td>Cuidado Integral del Niño</td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-no">✗</span></td></tr>
+          <tr><td>302</td><td>Cuidado Integral del Adolescente</td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-no">✗</span></td></tr>
+          <tr><td>303</td><td>Cuidado Integral del Joven</td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-no">✗</span></td></tr>
+          <tr><td>304</td><td>Cuidado Integral del Adulto</td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-no">✗</span></td></tr>
+          <tr><td>305</td><td>Cuidado Integral del Adulto Mayor</td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-no">✗</span></td></tr>
+          <tr><td>306</td><td>Cuidado Integral Prenatal</td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-x">✓</span></td><td><span class="tag tag-no">✗</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr style="border: 1px solid #eee; margin: 30px 0;">
+
+  <!-- Parte C: Reglas de Oro e Importantes -->
+  <div class="gold-box" style="margin-bottom:16px;">
+    <h3>⭐ Reglas Importantes para las IPRESS / RSVM</h3>
+    <div class="regla"><div class="rnum">1</div><span>El código 301 al 306 depende de la <strong>edad del paciente</strong>, no del servicio ni del profesional.</span></div>
+    <div class="regla"><div class="rnum">2</div><span><strong>"Prestación individual"</strong> = lo que antes se llamaba UPS. Cada profesional firma <strong>su propio FUA</strong>. No se comparte entre profesionales.</span></div>
+    <div class="regla"><div class="rnum">3</div><span><strong>Sin tope de atenciones</strong> 301 al 306. Nunca duplicar actividades ni horarios en dos servicios el mismo día con el mismo asegurado.</span></div>
+    <div class="regla"><div class="rnum">4</div><span>Si tamizaje <strong>PATOLÓGICO</strong>, registrar al menos un diagnóstico CIE-10 según RC-34.</span></div>
+    <div class="regla"><div class="rnum">5</div><span>Cuando se registra un código 301–306, quedan <strong>excluidos los códigos fragmentados</strong> (001, 009, 017, etc.) para la misma atención.</span></div>
+    <div class="regla"><div class="rnum">6</div><span>El reverso del FUA debe incluir siempre: <strong>productos farmacéuticos, procedimientos e insumos</strong> (RC-12 bloquea si falta).</span></div>
+    <div class="regla"><div class="rnum">7</div><span>Código <strong>306 solo para mujeres gestantes o puérperas</strong> (9 a 59 años). Excluye no gestantes. RC-01 bloquea el registro.</span></div>
+    <div class="regla"><div class="rnum">8</div><span>Los códigos 301–306 <strong>solo aplican en I Nivel</strong> de atención (I-1 a I-4). RC-92 bloquea en niveles II y III.</span></div>
+  </div>
+
+  <!-- Parte D: Base Normativa -->
+  <div class="card">
+    <div class="card-title">📌 Referencia normativa</div>
+    <table class="tbl">
+      <thead><tr><th>Documento</th><th>Descripción</th><th>Vigencia</th></tr></thead>
+      <tbody>
+        <tr><td>RG N.° 000002-2026-SIS/GREP</td><td>Aprueba Criterios Técnicos RM-CV en FUA. Crea códigos 301–306.</td><td>01/03/2026</td></tr>
+        <tr><td>RC-01 (Informe 000006-2026)</td><td>Consistencia por edad, sexo y condición. Incluye 301–306.</td><td>13/03/2026</td></tr>
+        <tr><td>RC-88, RC-89 (Informe 000007-2026)</td><td>Consistencia diagnóstico-procedimiento y topes por CV.</td><td>14/04/2026</td></tr>
+        <tr><td>RC-14 (Informe 000007-2026)</td><td>Obligatoriedad de actividades preventivas por código.</td><td>14/04/2026</td></tr>
+        <tr><td>RJ N.° 000178-2024-SIS/J</td><td>Directiva N.° 002-2024-SIS/GREP-V.02 para registro FUA.</td><td>Vigente</td></tr>
+        <tr><td>RM N.° 030-2020-MINSA</td><td>Modelo de Cuidado Integral por Curso de Vida (MCI).</td><td>Vigente</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SECCION 2: CODIGOS ===== -->
+<div class="section fade" id="sec-codigos">
+  <div class="sec-label">📋 Códigos por Curso de Vida — Haz clic en un código para ver sus Reglas de Consistencia</div>
+
+  <!-- 6 tarjetas de codigo -->
+  <div class="cards-grid g3" style="margin-bottom:18px;" id="cod-cards-wrap">
+    <div class="cod-card c301" onclick="selectCodRC(this,301)">
+      <div class="cnum">301</div>
+      <div class="cnombre">Cuidado Integral del Niño</div>
+      <div class="crango">0 a 11 años, 11 meses, 29 días</div>
+      <button>Ver reglas de consistencia</button>
+    </div>
+    <div class="cod-card c302" onclick="selectCodRC(this,302)">
+      <div class="cnum">302</div>
+      <div class="cnombre">Cuidado Integral del Adolescente</div>
+      <div class="crango">12 a 17 años, 11 meses, 29 días</div>
+      <button>Ver reglas de consistencia</button>
+    </div>
+    <div class="cod-card c303" onclick="selectCodRC(this,303)">
+      <div class="cnum">303</div>
+      <div class="cnombre">Cuidado Integral del Joven</div>
+      <div class="crango">18 a 29 años, 11 meses, 29 días</div>
+      <button>Ver reglas de consistencia</button>
+    </div>
+    <div class="cod-card c304" onclick="selectCodRC(this,304)">
+      <div class="cnum">304</div>
+      <div class="cnombre">Cuidado Integral del Adulto</div>
+      <div class="crango">30 a 59 años, 11 meses, 29 días</div>
+      <button>Ver reglas de consistencia</button>
+    </div>
+    <div class="cod-card c305" onclick="selectCodRC(this,305)">
+      <div class="cnum">305</div>
+      <div class="cnombre">Cuidado Integral del Adulto Mayor</div>
+      <div class="crango">60 años a más</div>
+      <button>Ver reglas de consistencia</button>
+    </div>
+    <div class="cod-card c306" onclick="selectCodRC(this,306)">
+      <div class="cnum">306</div>
+      <div class="cnombre">Cuidado Integral Prenatal</div>
+      <div class="crango">Gestante / Puérpera 9 a 59 años</div>
+      <button>Ver reglas de consistencia</button>
+    </div>
+  </div>
+
+  <!-- PANEL DINAMICO DE RC -->
+  <div id="rc-panel-area"></div>
+</div>
+
+<!-- ===== SECCION 3: POR PROFESIÓN + LLENADO DEL FUA (FUSIONADO) ===== -->
+<div class="section fade" id="sec-profesiones">
+
+  <!-- SELECTOR HEADER -->
+  <div style="background:linear-gradient(135deg,#0f2352 0%,#1a56db 100%);border-radius:12px;padding:18px 22px;margin-bottom:16px;color:white;">
+    <div style="font-family:Nunito,sans-serif;font-size:17px;font-weight:900;margin-bottom:6px;">👤 Por Profesión — Llenado completo del FUA</div>
+    <div style="font-size:12px;opacity:0.82;">Selecciona tu profesión para ver los FUAs que puedes generar y exactamente qué rellenar en cada campo</div>
+  </div>
+
+  <!-- TAGS DE PROFESION -->
+  <div class="card" style="margin-bottom:0;border-radius:12px 12px 0 0;border-bottom:none;">
+    <div class="card-title" style="margin-bottom:12px;">Selecciona tu profesión:</div>
+    <div class="prof-tags" id="prof-tags-wrap">
+      <span class="ptag active" onclick="selectProf2(this,'EN')">🩺 Enfermería</span>
+      <span class="ptag" onclick="selectProf2(this,'TE')">💉 Tec. Enfermería</span>
+      <span class="ptag" onclick="selectProf2(this,'OB')">🤰 Obstetricia</span>
+      <span class="ptag" onclick="selectProf2(this,'MD')">👨‍⚕️ Medicina</span>
+      <span class="ptag" onclick="selectProf2(this,'OD')">🦷 Odontología</span>
+      <span class="ptag" onclick="selectProf2(this,'PS')">🧠 Psicología</span>
+      <span class="ptag" onclick="selectProf2(this,'NU')">🥗 Nutrición</span>
+      <span class="ptag" onclick="selectProf2(this,'TS')">🤝 Trabajo Social</span>
+      <span class="ptag" onclick="selectProf2(this,'IM')">💊 Inmunizaciones</span>
+      <span class="ptag" onclick="selectProf2(this,'TB')">🫁 Tuberculosis</span>
+      <span class="ptag" onclick="selectProf2(this,'PF')">👩 Planif. Familiar</span>
+      <span class="ptag" onclick="selectProf2(this,'VH')">🔴 VIH / Sida</span>
+    </div>
+  </div>
+
+  <!-- PANEL PROFESION ACTIVA -->
+  <div id="prof-content-area"></div>
+
+</div>
+
+
+<div class="section fade" id="sec-rc">
+  <div class="card">
+    <div class="card-title">⚙ Reglas de Consistencia aplicables a códigos 301–306</div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-01 — Consistencia por edad, sexo y condiciones del asegurado <span style="font-size:11px;font-weight:400;float:right;color:var(--texto2);">Actualizado 13 marzo 2026</span></div>
+      <div class="rc-obj">Objetivo: Garantizar que las prestaciones se registren únicamente cuando corresponda a la edad, sexo y condición de salud del asegurado.</div>
+      <table class="tbl">
+        <thead><tr><th>Código</th><th>Edad Mín.</th><th>Edad Máx.</th><th>Sexo</th><th>Gestante</th><th>Puérpera</th><th>Acción si falla</th></tr></thead>
+        <tbody>
+          <tr><td>301</td><td>0 días</td><td>11a 11m 29d</td><td><span class="tag tag-a">A</span></td><td>N</td><td>N</td><td>No permite grabar</td></tr>
+          <tr><td>302</td><td>12a</td><td>17a 11m 29d</td><td><span class="tag tag-a">A</span></td><td>N</td><td>N</td><td>No permite grabar</td></tr>
+          <tr><td>303</td><td>18a</td><td>29a 11m 29d</td><td><span class="tag tag-a">A</span></td><td>N</td><td>N</td><td>No permite grabar</td></tr>
+          <tr><td>304</td><td>30a</td><td>59a 11m 29d</td><td><span class="tag tag-a">A</span></td><td>N</td><td>N</td><td>No permite grabar</td></tr>
+          <tr><td>305</td><td>60a</td><td>120a</td><td><span class="tag tag-a">A</span></td><td>N</td><td>N</td><td>No permite grabar</td></tr>
+          <tr><td>306</td><td>9a</td><td>59a 11m 29d</td><td><span class="tag tag-f">F</span></td><td>S</td><td>S</td><td>No permite grabar</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-12 — Registro obligatorio de medicamentos, insumos y/o procedimientos</div>
+      <div class="rc-obj">Objetivo: Condicionar el registro de prestaciones a la inclusión obligatoria de medicamentos, insumos y/o procedimientos. Para 301–306: no se puede grabar si falta medicamento O insumo O procedimiento.</div>
+      <div style="background:#fef2f2; border-radius:8px; padding:10px 14px; font-size:12.5px; color:#7f1d1d; border-left:3px solid #ef4444;">
+        ⛔ <strong>Para códigos 301–306:</strong> No permite grabar el FUA si se omite el registro de medicamentos, insumos O procedimientos correspondientes a la atención realizada.
+      </div>
+    </div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-14 — Obligatoriedad de actividades preventivas por código prestacional <span style="font-size:11px;font-weight:400;float:right;color:var(--texto2);">Actualizado 14 abril 2026</span></div>
+      <div class="rc-obj">Objetivo: Garantizar que las prestaciones registren las actividades preventivas y clínicas establecidas por normativa vigente.</div>
+      <table class="tbl">
+        <thead><tr><th>Código</th><th>Actividades obligatorias en reverso FUA</th><th>Excepción</th></tr></thead>
+        <tbody>
+          <tr><td>301</td><td>CRED según edad, Peso, Talla, Vacunas según esquema, Consejería integral</td><td>Atención extramural: exonera Peso, Talla y PA</td></tr>
+          <tr><td>302</td><td>Control desarrollo adolescente, Consejería, Tamizaje salud mental</td><td>—</td></tr>
+          <tr><td>303</td><td>Evaluación joven, Consejería integral, Tamizaje salud mental</td><td>No aplica PPFF (018/401) si CIE-10 Z008</td></tr>
+          <tr><td>304</td><td>Evaluación adulto, Consejería, Tamizajes (CA, HTA, DM)</td><td>No aplica PPFF (018/401) si CIE-10 Z008</td></tr>
+          <tr><td>305</td><td>Evaluación geriátrica, Consejería, Tamizaje cognitivo</td><td>No aplica PPFF (018/401) si CIE-10 Z008</td></tr>
+          <tr><td>306</td><td>APN según edad gestacional, Peso, Talla, PA, Fecha probable parto, Labs obligatorios</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-34 — Registro de diagnóstico obligatorio en tamizaje salud mental patológico <span style="font-size:11px;font-weight:400;float:right;color:var(--texto2);">Actualizado 13 marzo 2026</span></div>
+      <div class="rc-obj">Objetivo: Obligar el registro de diagnósticos CIE-10 cuando el tamizaje de salud mental resulta PATOLÓGICO en cualquiera de los códigos 301–306.</div>
+      <div style="background:#f0fdf4; border-radius:8px; padding:10px 14px; font-size:12px; color:#14532d; border-left:3px solid #22c55e;">
+        ✅ <strong>Aplica a: 301, 302, 303, 304, 305, 306.</strong> Si el campo "Tamizaje de Salud Mental" es marcado como <strong>patológico</strong>, se debe registrar al menos uno de los diagnósticos: F000–F99X (trastornos mentales), X60–X83 (lesiones autoinfligidas), T740–T749 (síndromes de maltrato), R45.6 (problemas de violencia), Z60–Z65 (problemas salud mental), entre otros.
+      </div>
+    </div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-88 — Consistencia entre diagnósticos y procedimientos según curso de vida <span style="font-size:11px;font-weight:400;float:right;color:var(--texto2);">Actualizado 14 abril 2026</span></div>
+      <div class="rc-obj">Objetivo: Garantizar coherencia entre diagnósticos CIE-10, procedimientos CPMS y código prestacional según curso de vida. Inmediata (bloquea al grabar).</div>
+      <table class="tbl">
+        <thead><tr><th>Código(s)</th><th>CIE-10</th><th>CPMS obligatorio</th><th>Descripción</th></tr></thead>
+        <tbody>
+          <tr><td>301</td><td>Z00.1 / Z00.2</td><td>99381.01 ó 99381 ó 99382 ó 99383</td><td>Control CRED según edad</td></tr>
+          <tr><td>301–306</td><td>Z29.82</td><td>99199.17 ó 99199.19</td><td>Suplementación con hierro/micronutrientes</td></tr>
+          <tr><td>301–306</td><td>Z29.9</td><td>99199.28</td><td>Profilaxis antiparasitaria</td></tr>
+          <tr><td>301–306</td><td>Z01.0</td><td>99173 ó 92015</td><td>Prueba de agudeza visual</td></tr>
+          <tr><td>301–306</td><td>Z13.3</td><td>96150.01–.08 ó 99402.09</td><td>Tamizaje de salud mental</td></tr>
+          <tr><td>301</td><td>Z76.2</td><td>99411.01 ó 99411.02</td><td>Atención Temprana del Desarrollo</td></tr>
+          <tr><td>301–306</td><td>Z51.5</td><td>99489–99489.04</td><td>Cuidados paliativos</td></tr>
+          <tr><td>302–306</td><td>Z30.x</td><td>99402 ó 99402.04</td><td>Consejería planificación familiar</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-89 — Registro condicionado de procedimientos a diagnósticos según curso de vida <span style="font-size:11px;font-weight:400;float:right;color:var(--texto2);">Actualizado 14 abril 2026</span></div>
+      <div class="rc-obj">Objetivo: Habilitar y establecer topes en procedimientos para profesionales no médicos en el I nivel de atención. Observa si se incumple el tope mínimo o máximo. Inmediata.</div>
+      <div style="background:#eff6ff; border-radius:8px; padding:10px 14px; font-size:12px; color:#1e3a8a; border-left:3px solid #3b82f6;">
+        🔵 Los topes son: MIN = mínimo a registrar en "indicado" y "ejecutado" | MÁX = máximo permitido. Ver tabla de procedimientos CPMS en la pestaña correspondiente.
+      </div>
+    </div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-86 — Prevención de duplicidades (intradía)</div>
+      <div class="rc-obj">Objetivo: Asegurar que una misma prestación no sea registrada duplicada o desagregada en más de un código.</div>
+      <div style="background:#fef9c3; border-radius:8px; padding:10px 14px; font-size:12px; color:#713f12; border-left:3px solid #eab308;">
+        ⚠ <strong>Importante:</strong> Los códigos 301–306 fueron RETIRADOS del control de duplicidad intradía de RC-86. Esto permite que el mismo profesional registre múltiples FUAs del mismo código en el mismo día para distintos asegurados. Sin embargo, NO se puede registrar la misma atención en código por curso de vida Y en código fragmentado simultáneamente.
+      </div>
+    </div>
+
+    <div class="rc-section">
+      <div class="rc-title">RC-92 — Consistencia de registro por nivel de atención</div>
+      <div class="rc-obj">Objetivo: Los códigos 301–306 solo pueden registrarse en IPRESS de primer nivel (I-1, I-2, I-3, I-4). NO se registran en niveles II ni III.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECCION 5: PROCEDIMIENTOS CPMS ===== -->
+
+<div class="section fade" id="sec-procedimientos">
+  <div class="card">
+    <div class="card-title">🔬 Buscador de Procedimientos CPMS — RC-89</div>
+    <div class="search-wrap">
+      <span class="icon">🔍</span>
+      <input type="text" id="buscar-cpms" placeholder="Buscar por CPMS o descripción..." oninput="filtrarCPMS()">
+    </div>
+    <table class="tbl" id="tabla-cpms">
+      <thead><tr><th>CPMS</th><th>Descripción</th><th>Código(s)</th><th>CIE-10</th><th>Tope</th></tr></thead>
+      <tbody id="cpms-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SECCION 6: REGLAS DE IMPORTANTES ESTA UNIDO A LA SECCION 1 ===== -->
+
+<div class="section fade" id="sec-reglas">
+  <div class="gold-box" style="margin-bottom:16px;">
+    <h3>⭐ Reglas Importantes para las IPRESS / RSVM</h3>
+    <div class="regla"><div class="rnum">1</div><span>El código 301 al 306 depende de la <strong>edad del paciente</strong>, no del servicio ni del profesional.</span></div>
+    <div class="regla"><div class="rnum">2</div><span><strong>"Prestación individual"</strong> = lo que antes se llamaba UPS. Cada profesional firma <strong>su propio FUA</strong>. No se comparte entre profesionales.</span></div>
+    <div class="regla"><div class="rnum">3</div><span><strong>Sin tope de atenciones</strong> 301 al 306. Nunca duplicar actividades ni horarios en dos servicios el mismo día con el mismo asegurado.</span></div>
+    <div class="regla"><div class="rnum">4</div><span>Si tamizaje <strong>PATOLÓGICO</strong>, registrar al menos un diagnóstico CIE-10 según RC-34.</span></div>
+    <div class="regla"><div class="rnum">5</div><span>Cuando se registra un código 301–306, quedan <strong>excluidos los códigos fragmentados</strong> (001, 009, 017, etc.) para la misma atención.</span></div>
+    <div class="regla"><div class="rnum">6</div><span>El reverso del FUA debe incluir siempre: <strong>productos farmacéuticos, procedimientos e insumos</strong> (RC-12 bloquea si falta).</span></div>
+    <div class="regla"><div class="rnum">7</div><span>Código <strong>306 solo para mujeres gestantes o puérperas</strong> (9 a 59 años). Excluye no gestantes. RC-01 bloquea el registro.</span></div>
+    <div class="regla"><div class="rnum">8</div><span>Los códigos 301–306 <strong>solo aplican en I Nivel</strong> de atención (I-1 a I-4). RC-92 bloquea en niveles II y III.</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📌 Referencia normativa</div>
+    <table class="tbl">
+      <thead><tr><th>Documento</th><th>Descripción</th><th>Vigencia</th></tr></thead>
+      <tbody>
+        <tr><td>RG N.° 000002-2026-SIS/GREP</td><td>Aprueba Criterios Técnicos RM-CV en FUA. Crea códigos 301–306.</td><td>01/03/2026</td></tr>
+        <tr><td>RC-01 (Informe 000006-2026)</td><td>Consistencia por edad, sexo y condición. Incluye 301–306.</td><td>13/03/2026</td></tr>
+        <tr><td>RC-88, RC-89 (Informe 000007-2026)</td><td>Consistencia diagnóstico-procedimiento y topes por CV.</td><td>14/04/2026</td></tr>
+        <tr><td>RC-14 (Informe 000007-2026)</td><td>Obligatoriedad de actividades preventivas por código.</td><td>14/04/2026</td></tr>
+        <tr><td>RJ N.° 000178-2024-SIS/J</td><td>Directiva N.° 002-2024-SIS/GREP-V.02 para registro FUA.</td><td>Vigente</td></tr>
+        <tr><td>RM N.° 030-2020-MINSA</td><td>Modelo de Cuidado Integral por Curso de Vida (MCI).</td><td>Vigente</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ===== SECCION 7: LLENADO DEL FUA ===== -->
+
+<div class="footer">
+  <strong>Unidad de Seguros – RSVM</strong> &nbsp;|&nbsp; 
+  Guía de Registro FUA – Prestaciones Modulares por Curso de Vida &nbsp;|&nbsp; 
+  RG N.° 000002-2026-SIS/GREP &nbsp;|&nbsp; Vigente desde 01/03/2026
+  <strong>Creditos| Aréa de Soporte Informatico: Juan Carlos Yllesca Rojas | Marco  de las casas | Jesus Mucha Santillan </strong>
+</div>
+</div>
+
+<script>
+// NAV TABS
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// NIVEL DATA
+const nD = {
+  1: {
+    p:['301 CRED niño (enfermería y técnico)','Inmunizaciones en todos los códigos','Suplementación hierro y micronutrientes (007)','Profilaxis antiparasitaria (008)','Consejería integral','Visitas domiciliarias (060/075)','Tamizaje de salud mental','Tamizaje agudeza visual'],
+    n:['Consulta médica (no hay médico)','Odontología (sin odontólogo)','Atenciones de alto riesgo obstétrico','Atención prenatal (referir a I-2 o I-3)','Emergencias (referir de inmediato)','Colposcopia (solo I-3 o I-4)'],
+    b:'#3b82f6', bg:'#eff6ff'
+  },
+  2: {
+    p:['Todo lo del nivel I-1','Consulta médica (056)','Atención prenatal básica (306)','CRED por médico o enfermería','Diagnóstico y tratamiento ambulatorio','Planificación familiar (018)'],
+    n:['Odontología especializada (sin especialista)','Partos de alto riesgo','Internamiento (referir a I-4 o II)','Colposcopia (solo I-3 o I-4)'],
+    b:'#22c55e', bg:'#f0fdf4'
+  },
+  3: {
+    p:['Todo lo del nivel I-2','Atención prenatal completa (306)','Odontología general (020,021,057,058,059)','Psicología, Nutrición, Obstetricia','Planificación familiar completa','Tamizaje de cáncer (024, 025)','Colposcopia (57510)','Intervención ambulatoria (064)'],
+    n:['Internamiento hospitalario','Cesárea','UCI'],
+    b:'#f97316', bg:'#fff7ed'
+  },
+  4: {
+    p:['Todo lo del nivel I-3','Internamiento sin cirugía (065)','Cirugía menor (066) y mayor (067)','Parto vaginal (054) y cesárea (055)','Atención del recién nacido (050)','UCI (068)','Tamizaje neonatal (029)'],
+    n:['Procedimientos de nivel III sin derivación','Trasplantes'],
+    b:'#8b5cf6', bg:'#f5f3ff'
+  }
+};
+
+function selectNivel(n, el) {
+  document.querySelectorAll('.nivel-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  const d = nD[n];
+  const p = document.getElementById('nivel-panel');
+  p.style.borderLeftColor = d.b;
+  p.style.background = d.bg;
+  document.getElementById('puede-list').innerHTML = d.p.map(i=>'<li>'+i+'</li>').join('');
+  document.getElementById('nopuede-list').innerHTML = d.n.map(i=>'<li>'+i+'</li>').join('');
+  p.classList.remove('fade'); void p.offsetWidth; p.classList.add('fade');
+}
+
+// PROF
+
+// =============================================
+// DATOS POR PROFESION
+// =============================================
+const COD_COLORS = {
+  301:{bg:'#dbeafe',hdr:'#1d4ed8',border:'#3b82f6',light:'#eff6ff'},
+  302:{bg:'#dcfce7',hdr:'#15803d',border:'#22c55e',light:'#f0fdf4'},
+  303:{bg:'#d1fae5',hdr:'#065f46',border:'#10b981',light:'#ecfdf5'},
+  304:{bg:'#ffedd5',hdr:'#c2410c',border:'#f97316',light:'#fff7ed'},
+  305:{bg:'#ede9fe',hdr:'#7c3aed',border:'#8b5cf6',light:'#f5f3ff'},
+  306:{bg:'#fce7f3',hdr:'#be185d',border:'#ec4899',light:'#fdf2f8'}
+};
+
+
+// =============================================
+// GALERÍA DE IMÁGENES Y PDF POR PROFESIÓN
+// =============================================
+const GALLERY_DATA = {
+  OD: {
+    pdf: 'pdf/CM-CV-ODONTOLOGIA.pdf',
+    pdfLabel: 'CM-CV Odontología',
+    codigos: {
+      301: [
+        { src:'img/odontologia_301_anverso.png', label:'FUA 301 — Anverso' },
+        { src:'img/odontologia_301_reverso.png', label:'FUA 301 — Reverso' }
+      ],
+      302: [
+        { src:'img/odontologia_302_anverso.png', label:'FUA 302 — Anverso' },
+        { src:'img/odontologia_302_reverso.png', label:'FUA 302 — Reverso' }
+      ],
+      303: [
+        { src:'img/odontologia_303_anverso.png', label:'FUA 303 — Anverso' },
+        { src:'img/odontologia_303_reverso.png', label:'FUA 303 — Reverso' }
+      ],
+      304: [
+        { src:'img/odontologia_304_anverso.png', label:'FUA 304 — Anverso' },
+        { src:'img/odontologia_304_reverso.png', label:'FUA 304 — Reverso' }
+      ],
+      305: [
+        { src:'img/odontologia_305_anverso.png', label:'FUA 305 — Anverso' },
+        { src:'img/odontologia_305_reverso.png', label:'FUA 305 — Reverso' }
+      ],
+      306: [
+        { src:'img/odontologia_306_anverso.png', label:'FUA 306 — Anverso' },
+        { src:'img/odontologia_306_reverso.png', label:'FUA 306 — Reverso' }
+      ]
+    }
+  },
+  EN: {
+    pdf: 'pdf/CM-CV-ENFERMERIA.pdf',
+    pdfLabel: 'CM-CV Enfermería',
+    codigos: {
+      301: [
+        { src:'img/enfermeria_301_anverso.png', label:'FUA 301 — Anverso' },
+        { src:'img/enfermeria_301_reverso.png', label:'FUA 301 — Reverso' }
+      ],
+      302: [
+        { src:'img/enfermeria_302_anverso.png', label:'FUA 302 — Anverso' },
+        { src:'img/enfermeria_302_reverso.png', label:'FUA 302 — Reverso' }
+      ]
+    }
+  },
+  OB: {
+    pdf: 'pdf/CM-CV-OBSTETRICIA.pdf',
+    pdfLabel: 'CM-CV Obstericia',
+    codigos: {
+      306: [
+        { src:'img/obstetricia_301_anverso.png', label:'FUA 301 — Anverso' },
+        { src:'img/obstetricia_301_reverso.png', label:'FUA 301 — Reverso' }
+      ],
+      304: [
+        { src:'img/obstetricia_302_anverso.png', label:'FUA 302 — Anverso' },
+        { src:'img/obstetricia_302_reverso.png', label:'FUA 302 — Reverso' }
+      ],
+      303: [
+        { src:'img/obstetricia_303_anverso.png', label:'FUA 303 — Anverso' },
+        { src:'img/obstetricia_303_reverso.png', label:'FUA 303 — Reverso' }
+      ],
+    }
+  },  
+  MD: {
+    pdf: 'pdf/CM-C-MEDICINA.pdf',
+    pdfLabel: 'CM-C Medicina',
+    codigos: {
+      301: [
+        { src:'img/medicina_301_anverso.png', label:'FUA 301 — Anverso' },
+        { src:'img/medicina_301_reverso.png', label:'FUA 301 — Reverso' }
+      ],
+      302: [
+        { src:'img/medicina_302_anverso.png', label:'FUA 302 — Anverso' },
+        { src:'img/medicina_302_reverso.png', label:'FUA 302 — Reverso' }
+      ],
+      303: [
+        { src:'img/medicina_303_anverso.png', label:'FUA 303 — Anverso' },
+        { src:'img/medicina_303_reverso.png', label:'FUA 303 — Reverso' }
+      ],
+      304: [
+        { src:'img/medicina_304_anverso.png', label:'FUA 304 — Anverso' },
+        { src:'img/medicina_304_reverso.png', label:'FUA 304 — Reverso' }
+      ],
+      305: [
+        { src:'img/medicina_305_anverso.png', label:'FUA 305 — Anverso' },
+        { src:'img/medicina_305_reverso.png', label:'FUA 305 — Reverso' }
+      ]
+    }
+  }
+};
+
+function getGallery(profKey, cod) {
+  const g = GALLERY_DATA[profKey];
+  if(!g) return '';
+  const cc = COD_COLORS[cod] || {hdr:'#1d4ed8', border:'#3b82f6', bg:'#eff6ff', light:'#eff6ff'};
+  let h = '';
+
+  // ── IMÁGENES del código ──
+  const imgs = g.codigos[parseInt(cod)] || g.codigos[cod];
+  if(imgs && imgs.length) {
+    h += `<div style="margin-top:18px;border-top:2px dashed ${cc.border};padding-top:16px;">
+      <div style="font-family:Nunito,sans-serif;font-size:13px;font-weight:800;
+        color:${cc.hdr};margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+        🖼 FUA de referencia — Código ${cod}
+        <span style="font-size:11px;font-weight:400;color:#94a3b8;">Clic en imagen para ampliar</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">`;
+    imgs.forEach(img => {
+      h += `
+        <div style="border:2px solid ${cc.border};border-radius:10px;overflow:hidden;
+          box-shadow:0 2px 10px rgba(0,0,0,0.08);transition:box-shadow 0.2s;"
+          onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.18)'"
+          onmouseout="this.style.boxShadow='0 2px 10px rgba(0,0,0,0.08)'">
+          <div style="background:${cc.bg};padding:7px 12px;font-size:11.5px;
+            font-weight:700;color:${cc.hdr};border-bottom:1px solid ${cc.border};">
+            📄 ${img.label}
+          </div>
+          <img src="${img.src}" alt="${img.label}"
+            style="width:100%;display:block;cursor:zoom-in;max-height:320px;object-fit:contain;background:#f8fafc;"
+            onclick="openImgModal('${img.src}','${img.label}')"
+            onerror="this.parentElement.innerHTML='<div style=\\'padding:30px;color:#94a3b8;font-size:12px;text-align:center;background:#f8fafc;\\'><div style=\\'font-size:32px;margin-bottom:8px;\\'>📷</div>Imagen no encontrada:<br><code style=\\'font-size:10px;color:#64748b;\\'>${img.src}</code><br><span style=\\'font-size:10px;margin-top:6px;display:block;\\'>Verifica que el archivo exista en la carpeta <strong>img/</strong></span></div>'">
+        </div>`;
+    });
+    h += `</div></div>`;
+  }
+
+  // ── PDF de la profesión ──
+  if(g.pdf) {
+    h += `
+    <div style="margin-top:18px;border-top:2px dashed ${cc.border};padding-top:16px;">
+      <div style="font-family:Nunito,sans-serif;font-size:13px;font-weight:800;
+        color:${cc.hdr};margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+        📑 Documento de Capacitación — ${g.pdfLabel}
+      </div>
+      <div style="border:2px solid ${cc.border};border-radius:10px;overflow:hidden;
+        box-shadow:0 2px 10px rgba(147,50,41,1.0);">
+        <div style="background:${cc.bg};padding:9px 14px;font-size:12px;
+          font-weight:700;color:${cc.hdr};display:flex;justify-content:space-between;align-items:center;
+          border-bottom:1px solid ${cc.border};">
+          <span>📄 ${g.pdfLabel}.pdf</span>
+          <a href="${g.pdf}#toolbar=0&navpanes=0&scrollbar=0" width="100%" height="540px"
+            style="background:${cc.hdr};color:white;padding:4px 14px;border-radius:20px;
+            font-size:11px;text-decoration:none;font-weight:700;white-space:nowrap;">
+            ↗ Abrir en nueva pestaña
+          </a>
+        </div>
+        <iframe src="${g.pdf}#toolbar=0&navpanes=0&scrollbar=0" width="100%" height="540px"
+          style="border:none;display:block;background:#f1f5f9;" 
+          id="pdf-iframe">
+          <div style="padding:30px;text-align:center;color:#64748b;font-size:13px;">
+            Tu navegador no puede mostrar el PDF directamente.
+          </div>
+        </iframe>
+      </div>
+    </div>`;
+  }
+
+  return h;
+}
+
+// ── MODAL para ampliar imagen ──
+function openImgModal(src, label) {
+  let modal = document.getElementById('img-modal');
+  if(!modal) {
+    modal = document.createElement('div');
+    modal.id = 'img-modal';
+    modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.92);
+      z-index:9999;display:flex;flex-direction:column;align-items:center;
+      justify-content:center;padding:20px;cursor:zoom-out;`;
+    modal.onclick = (e) => { if(e.target===modal||e.target.id==='modal-close') modal.style.display='none'; };
+    modal.innerHTML = `
+      <div style="position:relative;max-width:95vw;">
+        <div style="color:white;font-size:13px;font-weight:700;margin-bottom:10px;
+          font-family:Nunito,sans-serif;text-align:center;" id="modal-label"></div>
+        <img id="modal-img" style="max-width:95vw;max-height:82vh;
+          border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.6);
+          object-fit:contain;display:block;">
+        <button id="modal-close" style="position:absolute;top:-36px;right:0;
+          background:rgba(255,255,255,0.15);border:none;color:white;
+          width:30px;height:30px;border-radius:50%;font-size:16px;cursor:pointer;
+          display:flex;align-items:center;justify-content:center;">✕</button>
+        <div style="color:rgba(255,255,255,0.45);font-size:11px;margin-top:10px;text-align:center;">
+          Clic en cualquier lugar para cerrar
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+  }
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal-label').textContent = label;
+  modal.style.display = 'flex';
+}
+
+
+const RC_DATA = {
+  301: {
+    rc01: {etapa:'0 a 11 años',edadMin:'0 días',edadMax:'11a 11m 29d',sexo:'A',hosp:'N',gest:'N',puerp:'N',noGest:'S'},
+    rc04: {alta:'X',citado:'X',hosp:'—',refEmerg:'X',refCext:'X',refApDx:'X',contrarref:'X'},
+    rc12: {accion:'Si falta MED o PROC/INSUM → No deja grabar',med:'X',proc:'X'},
+    rc14: [
+      {criterio:'Todos',actividad:'PESO (003) y TALLA (004)',accion:'No grabar si falta'},
+      {criterio:'Z001 o Z002',actividad:'CONTROL CRED (120)',accion:'No grabar si falta'},
+      {criterio:'CIE-10 tabla N°1 · >12a · Médico',actividad:'PRESION ARTERIAL (301)',accion:'No grabar si falta'},
+      {criterio:'Z001/Z002/Z38x',actividad:'PREMATURO AL NACER (019), BAJO PESO AL NACER (020), ENFERMEDADES CONGENITAS (024)',accion:'No grabar si falta'},
+      {criterio:'Z38x',actividad:'EDAD GESTACIONAL RN SEMANAS (304)',accion:'No grabar si falta'},
+    ],
+    rc20:'Limita CPMS exclusivos según tipo de profesional. Procedimientos quirúrgicos (cesárea, prostatectomía, etc.) solo para Médico código 1. Procedimientos preventivos habilitados para todos los profesionales del I nivel.',
+    rc88:[
+      {cie:'Z001 o Z002',desc:'Atención integral del niño; CRED neonato',cpms:'99381.01 o 99381 o 99382 o 99383'},
+      {cie:'Z2982',desc:'Suplementación con hierro',cpms:'99199.17 o 99199.19'},
+      {cie:'Z299',desc:'Profilaxis antiparasitaria',cpms:'99199.28'},
+      {cie:'Z010',desc:'Prueba de agudeza visual o refracción',cpms:'99173 o 92015'},
+      {cie:'Z133',desc:'Tamizajes en salud mental',cpms:'96150.01 o 96150.03 o 96150.04 o 96150.05 o 96150.06 o 96150.08'},
+      {cie:'Z762',desc:'Atención Temprana del Desarrollo',cpms:'99411.01 o 99411.02'},
+      {cie:'Z515',desc:'Cuidados paliativos',cpms:'99489 o 99489.01–.04'},
+      {cie:'Z609',desc:'Servicio social',cpms:'99210 o 99210.03 o 99210.04'},
+      {cie:'Z2981',desc:'Administración vitamina A',cpms:'99199.27'},
+      {cie:'Z768',desc:'Instrucción higiene oral (IHO)',cpms:'D1330 y D1310'},
+      {cie:'Z012',desc:'Evaluación oral completa',cpms:'D0150 o D0120'},
+      {cie:'Z918/E43X/E44/E66/E45X',desc:'Consejería nutricional (riesgo nutricional)',cpms:'99403 o 99401.02 o 99401.03 o 99252'},
+      {cie:'Z743',desc:'Visita domiciliaria neonatal',cpms:'99502'},
+      {cie:'Z135/Z136/Z138',desc:'Colección de sangre capilar (tamizaje neonatal)',cpms:'36416 o 99431.01 o 99431.02'},
+      {cie:'Z37x/Z38x',desc:'Atención del RN inmediatamente después del parto',cpms:'99436 o 99436.02'},
+      {cie:'K020–K029',desc:'Tratamiento restaurador atraumático',cpms:'E1352 y otras restauraciones'},
+      {cie:'K083/K041/K001–K007/S025',desc:'Exodoncia diente deciduo',cpms:'D7111 o D7176 o D7140'},
+      {cie:'K00–K14 (cav. bucal)',desc:'Raspaje dental / Consulta estomatológica',cpms:'D4355 o D0140'},
+      {cie:'D509/D500/D508/D539/D649/O990',desc:'Hemograma y plaquetas CBC',cpms:'85023'},
+      {cie:'A159/Z030/Z865/Z206/B24x',desc:'Consejería TBC/VIH',cpms:'99401 o 99216 o 99199.11'},
+      {cie:'F000–F989/X60–X83/T740–T749/Y040+',desc:'Psicoterapia individual (psicólogo)',cpms:'90806 o 90806.01–.07'},
+      {cie:'Z501/Z505/Z507–Z509',desc:'Evaluación terapia física/ocupacional',cpms:'97001 o 97002 o 97003 o 97004'},
+      {cie:'Todos CIE10',desc:'Atención en nutrición',cpms:'99209'},
+      {cie:'Z501/Z505/Z507/Z508/Z509',desc:'Evaluación terapia física',cpms:'97001'},
+      {cie:'Todos CIE10',desc:'Curación de herida primaria',cpms:'15854 (EJE tope máx 1)'},
+    ],
+    rc89_sample:[
+      {cie:'Z001 o Z002',cpms:'99381.01',proc:'CRED neonato',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z001 o Z002',cpms:'99381/99382/99383',proc:'CRED según edad (0–1a / 1–4a / 5–11a)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z2982',cpms:'99199.17 / 99199.19',proc:'Suplementación hierro / Multimicronutrientes',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z299',cpms:'99199.28',proc:'Profilaxis antiparasitaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z2981',cpms:'99199.27',proc:'Vitamina A',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z23x–Z27x',cpms:'90460–90749',proc:'Administración de inmunizaciones',ind_min:1,ind_max:5,eje_min:1,eje_max:5},
+      {cie:'Z133',cpms:'96150.01/.03/.04/.05/.06/.08',proc:'Tamizajes salud mental',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z010',cpms:'99173 / 92015',proc:'Agudeza visual / Refracción',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z762',cpms:'99411.01 / 99411.02',proc:'Atención Temprana del Desarrollo (ATD)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z918/E43X/E44/E66/E45X',cpms:'99403 / 99252',proc:'Consejería nutricional (riesgo)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z743',cpms:'99502',proc:'Visita domiciliaria neonatal',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'90806.07',proc:'Visita domiciliaria/escolar/laboral',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z768',cpms:'D1330 / D1310',proc:'Instrucción higiene oral (IHO)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z012',cpms:'D0150',proc:'Evaluación oral completa',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z298',cpms:'D1110/D1206/D1208/D1351',proc:'Profilaxis dental / Flúor / Sellantes',ind_min:1,ind_max:1,eje_min:1,eje_max:4},
+      {cie:'K02x',cpms:'E1352 / D2330–D2394',proc:'Tratamiento restaurador / Restauraciones',ind_min:1,ind_max:4,eje_min:1,eje_max:4},
+      {cie:'K08x–K01x',cpms:'D7111 / D7140 / D7176',proc:'Exodoncia diente deciduo',ind_min:1,ind_max:2,eje_min:1,eje_max:2},
+      {cie:'K00–K14',cpms:'D0140 / D4355',proc:'Consulta estomatológica / Destartraje',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'D509/D500/D649',cpms:'85023',proc:'Hemograma + recuento plaquetas CBC',ind_min:1,ind_max:1,eje_min:0,eje_max:1},
+      {cie:'Z515',cpms:'99341–99350 / 99489–.04',proc:'Consulta domicilio / Cuidados paliativos',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z609',cpms:'99210 / 99210.03 / .04',proc:'Atención de servicio social',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'F000–F989/X60+',cpms:'90806 / 90806.01–.07',proc:'Psicoterapia individual (psicólogo)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z501/Z505/Z507–Z509',cpms:'97001–97004',proc:'Terapia física / ocupacional',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'99209',proc:'Atención en nutrición',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'15854',proc:'Curación de herida primaria',ind_min:0,ind_max:1,eje_min:0,eje_max:1},
+    ]
+  },
+  302: {
+    rc01:{etapa:'12 a 17 años',edadMin:'12a',edadMax:'17a 11m 29d',sexo:'A',hosp:'N',gest:'N',puerp:'N',noGest:'S'},
+    rc04:{alta:'X',citado:'X',hosp:'—',refEmerg:'X',refCext:'X',refApDx:'X',contrarref:'X'},
+    rc12:{accion:'Si falta MED o PROC/INSUM → No deja grabar',med:'X',proc:'X'},
+    rc14:[
+      {criterio:'Todos',actividad:'PESO (003) y TALLA (004)',accion:'No grabar si falta'},
+      {criterio:'CIE-10 tabla N°1 · >12a · Médico',actividad:'PRESION ARTERIAL (301)',accion:'No grabar si falta'},
+      {criterio:'Z003/Z008/Z000 · >12a',actividad:'IMC (014) y PAB (015)',accion:'No grabar si falta'},
+    ],
+    rc20:'Mismo criterio que 301. CPMS exclusivos por profesional. Procedimientos quirúrgicos solo para médico.',
+    rc88:[
+      {cie:'Z2982',desc:'Suplementación con hierro',cpms:'99199.17 o 99199.19'},
+      {cie:'Z299',desc:'Profilaxis antiparasitaria',cpms:'99199.28'},
+      {cie:'Z010',desc:'Prueba de agudeza visual',cpms:'99173 o 92015'},
+      {cie:'Z133',desc:'Tamizajes en salud mental',cpms:'96150.01/.03/.04/.05/.06/.08'},
+      {cie:'Z30x',desc:'Consejería PPFF',cpms:'99402 o 99402.04'},
+      {cie:'Z515',desc:'Cuidados paliativos',cpms:'99489–.04'},
+      {cie:'Z609',desc:'Servicio social',cpms:'99210 o 99210.03 o .04'},
+      {cie:'Z768',desc:'IHO',cpms:'D1330 y D1310'},
+      {cie:'Z012',desc:'Evaluación oral completa',cpms:'D0150 o D0120'},
+      {cie:'K02x',desc:'Restauraciones dentales',cpms:'E1352 / D2330–D2394'},
+      {cie:'K08x–K01x',desc:'Exodoncia',cpms:'D7111 / D7140'},
+      {cie:'A159/Z030/Z865/B24x',desc:'Consejería TBC/VIH',cpms:'99401 o 99216'},
+      {cie:'F000–F989/X60+',desc:'Psicoterapia (psicólogo)',cpms:'90806 o 90806.01–.07'},
+    ],
+    rc89_sample:[
+      {cie:'Z2982',cpms:'99199.17/.19',proc:'Suplementación hierro/micronutrientes',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z299',cpms:'99199.28',proc:'Profilaxis antiparasitaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z23x–Z27x',cpms:'90460–90749',proc:'Inmunizaciones (HPV, Td, Influenza...)',ind_min:1,ind_max:5,eje_min:1,eje_max:5},
+      {cie:'Z133',cpms:'96150.01/.02/.03/.04/.05/.06/.08',proc:'Tamizajes salud mental',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z010',cpms:'99173 / 92015',proc:'Agudeza visual / Refracción',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'90806.07',proc:'Visita domiciliaria/escolar',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z768',cpms:'D1330/D1310',proc:'IHO / Asesoría nutricional bucal',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z012',cpms:'D0150',proc:'Evaluación oral completa',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z298',cpms:'D1110/D1206/D1208/D1351',proc:'Profilaxis dental / Flúor / Sellantes',ind_min:1,ind_max:1,eje_min:1,eje_max:4},
+      {cie:'K02x',cpms:'E1352 / restauraciones',proc:'Restauraciones dentales',ind_min:1,ind_max:4,eje_min:1,eje_max:4},
+      {cie:'K08x–K01x',cpms:'D7111/D7140',proc:'Exodoncia',ind_min:1,ind_max:2,eje_min:1,eje_max:2},
+      {cie:'Z30x',cpms:'99402 / 99402.04',proc:'Consejería PPFF',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z609',cpms:'99210/.03/.04',proc:'Servicio social',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'F000+/X60+',cpms:'90806–.07',proc:'Psicoterapia individual',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+    ]
+  },
+  303: {
+    rc01:{etapa:'18 a 29 años',edadMin:'18a',edadMax:'29a 11m 29d',sexo:'A',hosp:'N',gest:'N',puerp:'N',noGest:'S'},
+    rc04:{alta:'X',citado:'X',hosp:'—',refEmerg:'X',refCext:'X',refApDx:'X',contrarref:'X'},
+    rc12:{accion:'Si falta MED o PROC/INSUM → No deja grabar',med:'X',proc:'X'},
+    rc14:[
+      {criterio:'Todos',actividad:'PESO (003) y TALLA (004)',accion:'No grabar si falta'},
+      {criterio:'Z003/Z008/Z000 · >12a',actividad:'IMC (014) y PAB (015)',accion:'No grabar si falta'},
+      {criterio:'CIE-10 tabla N°1 · >12a · Médico',actividad:'PRESION ARTERIAL (301)',accion:'No grabar si falta'},
+    ],
+    rc20:'Procedimientos quirúrgicos exclusivos para médico. Colposcopia habilitada desde I-3.',
+    rc88:[
+      {cie:'Z2982',desc:'Suplementación hierro',cpms:'99199.17 o 99199.19'},
+      {cie:'Z299',desc:'Profilaxis antiparasitaria',cpms:'99199.28'},
+      {cie:'Z010',desc:'Agudeza visual',cpms:'99173 o 92015'},
+      {cie:'Z133',desc:'Tamizajes salud mental',cpms:'96150.01–.06/.08'},
+      {cie:'Z30x',desc:'Consejería PPFF',cpms:'99402 o 99402.04'},
+      {cie:'Z12.4',desc:'Tamizaje cáncer cérvix / VPH',cpms:'99199.16 / 87621 / 88150.01 / 88141 / 99402.06'},
+      {cie:'Z12.3',desc:'Examen clínico mama / Mamografía',cpms:'99386.03 / 77057 / 76645 / 99402.08'},
+      {cie:'Z31.6',desc:'Atención preconcepcional',cpms:'99385.02 o 99386.02'},
+      {cie:'Z515',desc:'Cuidados paliativos',cpms:'99489–.04'},
+      {cie:'Z609',desc:'Servicio social',cpms:'99210/.03/.04'},
+      {cie:'Z768',desc:'IHO',cpms:'D1330 y D1310'},
+      {cie:'Z012',desc:'Evaluación oral completa',cpms:'D0150 o D0120'},
+      {cie:'F000+/X60+',desc:'Psicoterapia (psicólogo)',cpms:'90806–.07'},
+    ],
+    rc89_sample:[
+      {cie:'Z2982',cpms:'99199.17/.19',proc:'Suplementación hierro/micronutrientes',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z299',cpms:'99199.28',proc:'Profilaxis antiparasitaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z23x–Z27x',cpms:'90471/90472',proc:'Inmunizaciones adulto (Td, Influenza...)',ind_min:1,ind_max:5,eje_min:1,eje_max:5},
+      {cie:'Z133',cpms:'96150.01/.02/.03/.04/.05/.06/.08',proc:'Tamizajes salud mental',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z010',cpms:'99173/92015',proc:'Agudeza visual / Refracción',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.4',cpms:'88141/87621/99402.06',proc:'Tamizaje cáncer cérvix / VPH',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.3',cpms:'99386.03/77057',proc:'Examen mama / Mamografía',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z30x',cpms:'99402/.04',proc:'Consejería PPFF',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z31.6',cpms:'99385.02/99386.02',proc:'Atención preconcepcional',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'90806.07',proc:'Visita domiciliaria/laboral',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'K02x',cpms:'restauraciones',proc:'Restauraciones dentales',ind_min:1,ind_max:4,eje_min:1,eje_max:4},
+      {cie:'K08x+',cpms:'D7140/D7176',proc:'Exodoncia',ind_min:1,ind_max:2,eje_min:1,eje_max:2},
+      {cie:'Z609',cpms:'99210/.03/.04',proc:'Servicio social',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'F000+/X60+',cpms:'90806–.07',proc:'Psicoterapia',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+    ]
+  },
+  304: {
+    rc01:{etapa:'30 a 59 años',edadMin:'30a',edadMax:'59a 11m 29d',sexo:'A',hosp:'N',gest:'N',puerp:'N',noGest:'S'},
+    rc04:{alta:'X',citado:'X',hosp:'—',refEmerg:'X',refCext:'X',refApDx:'X',contrarref:'X'},
+    rc12:{accion:'Si falta MED o PROC/INSUM → No deja grabar',med:'X',proc:'X'},
+    rc14:[
+      {criterio:'Todos',actividad:'PESO (003) y TALLA (004)',accion:'No grabar si falta'},
+      {criterio:'Z003/Z008/Z000 · >12a',actividad:'IMC (014) y PAB (015)',accion:'No grabar si falta'},
+      {criterio:'CIE-10 tabla N°1 · >12a · Médico',actividad:'PRESION ARTERIAL (301)',accion:'No grabar si falta'},
+    ],
+    rc20:'Procedimientos quirúrgicos exclusivos para médico. Tamizajes cancer de mama y cérvix habilitados.',
+    rc88:[
+      {cie:'Z2982',desc:'Suplementación hierro',cpms:'99199.17 o 99199.19'},
+      {cie:'Z299',desc:'Profilaxis antiparasitaria',cpms:'99199.28'},
+      {cie:'Z010',desc:'Agudeza visual',cpms:'99173 o 92015'},
+      {cie:'Z133',desc:'Tamizajes salud mental',cpms:'96150.01–.06/.08'},
+      {cie:'Z30x',desc:'Consejería PPFF',cpms:'99402 o 99402.04'},
+      {cie:'Z12.4',desc:'Tamizaje cáncer cérvix / VPH (mujeres)',cpms:'88141/87621/99402.06'},
+      {cie:'Z12.5',desc:'PSA cáncer próstata (hombres 50–75a)',cpms:'84152 / 84154 / 99402.08'},
+      {cie:'Z12.3',desc:'Mamografía / Examen clínico mama',cpms:'99386.03 / 77057 / 76645 / 99402.08'},
+      {cie:'Z31.6',desc:'Atención preconcepcional',cpms:'99385.02 o 99386.02'},
+      {cie:'Z515',desc:'Cuidados paliativos',cpms:'99489–.04'},
+      {cie:'Z609',desc:'Servicio social',cpms:'99210/.03/.04'},
+      {cie:'Z768',desc:'IHO',cpms:'D1330 y D1310'},
+      {cie:'Z012',desc:'Evaluación oral completa',cpms:'D0150 o D0120'},
+      {cie:'F000+/X60+',desc:'Psicoterapia (psicólogo)',cpms:'90806–.07'},
+    ],
+    rc89_sample:[
+      {cie:'Z2982',cpms:'99199.17/.19',proc:'Suplementación hierro/micronutrientes',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z299',cpms:'99199.28',proc:'Profilaxis antiparasitaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z23x–Z27x',cpms:'90471/90472',proc:'Inmunizaciones adulto',ind_min:1,ind_max:5,eje_min:1,eje_max:5},
+      {cie:'Z133',cpms:'96150.01–.06/.08',proc:'Tamizajes salud mental',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z010',cpms:'99173/92015',proc:'Agudeza visual / Refracción',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.4',cpms:'88141/87621/99402.06',proc:'Tamizaje cérvix / VPH',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.5',cpms:'84152/84154',proc:'PSA próstata (hombres 50–75a)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.3',cpms:'77057/76645',proc:'Mamografía / Examen mama',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z30x',cpms:'99402/.04',proc:'Consejería PPFF',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'90806.07',proc:'Visita domiciliaria/laboral',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'K02x',cpms:'restauraciones',proc:'Restauraciones dentales',ind_min:1,ind_max:4,eje_min:1,eje_max:4},
+      {cie:'K08x+',cpms:'D7140/D7176',proc:'Exodoncia',ind_min:1,ind_max:2,eje_min:1,eje_max:2},
+      {cie:'Z609',cpms:'99210/.03/.04',proc:'Servicio social',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'F000+/X60+',cpms:'90806–.07',proc:'Psicoterapia',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+    ]
+  },
+  305: {
+    rc01:{etapa:'60 años a más',edadMin:'60a',edadMax:'120a',sexo:'A',hosp:'N',gest:'N',puerp:'N',noGest:'S'},
+    rc04:{alta:'X',citado:'X',hosp:'—',refEmerg:'X',refCext:'X',refApDx:'X',contrarref:'X'},
+    rc12:{accion:'Si falta MED o PROC/INSUM → No deja grabar',med:'X',proc:'X'},
+    rc14:[
+      {criterio:'Todos',actividad:'PESO (003) y TALLA (004)',accion:'No grabar si falta'},
+      {criterio:'Z003/Z008/Z000 · >12a',actividad:'IMC (014) y PAB (015)',accion:'No grabar si falta'},
+      {criterio:'CIE-10 tabla N°1 · >12a · Médico',actividad:'PRESION ARTERIAL (301)',accion:'No grabar si falta'},
+    ],
+    rc20:'Procedimientos quirúrgicos exclusivos para médico. Deterioro cognitivo (96150.07) exclusivo de 305.',
+    rc88:[
+      {cie:'Z2982',desc:'Suplementación hierro',cpms:'99199.17 o 99199.19'},
+      {cie:'Z299',desc:'Profilaxis antiparasitaria',cpms:'99199.28'},
+      {cie:'Z010',desc:'Agudeza visual',cpms:'99173 o 92015'},
+      {cie:'Z133',desc:'Tamizajes salud mental + deterioro cognitivo',cpms:'96150.01–.08 (incluye 96150.07 exclusivo 305)'},
+      {cie:'Z12.1',desc:'Sangre oculta en heces',cpms:'82270'},
+      {cie:'Z12.3',desc:'Mamografía / Examen mama (mujeres)',cpms:'99386.03 / 77057 / 76645'},
+      {cie:'Z515',desc:'Cuidados paliativos',cpms:'99489–.04'},
+      {cie:'Z609',desc:'Servicio social',cpms:'99210/.03/.04'},
+      {cie:'Z768',desc:'IHO',cpms:'D1330 y D1310'},
+      {cie:'Z012',desc:'Evaluación oral completa',cpms:'D0150 o D0120'},
+      {cie:'F000+/X60+',desc:'Psicoterapia (psicólogo)',cpms:'90806–.07'},
+    ],
+    rc89_sample:[
+      {cie:'Z2982',cpms:'99199.17/.19',proc:'Suplementación hierro/micronutrientes',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z299',cpms:'99199.28',proc:'Profilaxis antiparasitaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z23x–Z27x',cpms:'90471/90472',proc:'Inmunizaciones adulto mayor',ind_min:1,ind_max:5,eje_min:1,eje_max:5},
+      {cie:'Z133',cpms:'96150.01/.02/.03/.04/.05/.06',proc:'Tamizajes salud mental',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z133',cpms:'96150.07',proc:'Tamizaje deterioro cognitivo (EXCLUSIVO 305)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z010',cpms:'99173/92015',proc:'Agudeza visual / Refracción',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.1',cpms:'82270',proc:'Sangre oculta en heces',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.3',cpms:'77057/76645',proc:'Mamografía / Examen mama',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'90806.07',proc:'Visita domiciliaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z515',cpms:'99341–99350/99489–.04',proc:'Consulta domicilio / Cuidados paliativos',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'K02x',cpms:'restauraciones',proc:'Restauraciones dentales',ind_min:1,ind_max:4,eje_min:1,eje_max:4},
+      {cie:'K08x+',cpms:'D7140/D7176',proc:'Exodoncia',ind_min:1,ind_max:2,eje_min:1,eje_max:2},
+      {cie:'Z609',cpms:'99210/.03/.04',proc:'Servicio social',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'F000+/X60+',cpms:'90806–.07',proc:'Psicoterapia',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+    ]
+  },
+  306: {
+    rc01:{etapa:'Gestante / Puérpera',edadMin:'9a',edadMax:'59a 11m 29d',sexo:'F',hosp:'N',gest:'S',puerp:'S',noGest:'N'},
+    rc04:{alta:'X',citado:'X',hosp:'—',refEmerg:'X',refCext:'X',refApDx:'X',contrarref:'X'},
+    rc12:{accion:'Si falta MED o PROC/INSUM → No deja grabar',med:'X',proc:'X'},
+    rc14:[
+      {criterio:'Todas',actividad:'PESO, TALLA, EDAD GESTACIONAL, ALTURA UTERINA, PA',accion:'No grabar si falta algún ítem'},
+      {criterio:'O800/O801/O808/O809/O840/O841/O842/O849',actividad:'PESO(003),TALLA(004),EDAD GEST(005),ALTURA UTERINA(011),PA(301)',accion:'No grabar si falta'},
+      {criterio:'Z340/Z348/Z349/Z3490–Z3492',actividad:'Control Pre-Natal (300)',accion:'No grabar si falta'},
+    ],
+    rc20:'RC30 obliga fecha probable de parto/fecha de parto. RC32 excluye parto vaginal+cesárea simultáneos.',
+    rc88:[
+      {cie:'Z340/Z348/Z349',desc:'Atención prenatal (CPN)',cpms:'59401 o 59401.01 o 59401.02'},
+      {cie:'Z31.82',desc:'Psicoprofilaxis / Estimulación prenatal',cpms:'99412.02 o 99412.01'},
+      {cie:'O800/O801/O808+',desc:'Atención obstétrica de rutina (parto)',cpms:'59400 o 59409 o 59409.01 o 59410 o 59872'},
+      {cie:'Z2982',desc:'Suplementación hierro',cpms:'99199.17 o 99199.19'},
+      {cie:'Z299',desc:'Profilaxis antiparasitaria',cpms:'99199.28'},
+      {cie:'Z010',desc:'Agudeza visual',cpms:'99173 o 92015'},
+      {cie:'Z133',desc:'Tamizajes salud mental',cpms:'96150.01–.06/.08'},
+      {cie:'Z30x',desc:'Consejería PPFF (postparto)',cpms:'99402 o 99402.04'},
+      {cie:'Z12.4',desc:'Tamizaje cáncer cérvix / VPH',cpms:'88141/87621/99402.06'},
+      {cie:'Z515',desc:'Cuidados paliativos',cpms:'99489–.04'},
+      {cie:'Z609',desc:'Servicio social',cpms:'99210/.03/.04'},
+      {cie:'Z768',desc:'IHO',cpms:'D1330 y D1310'},
+      {cie:'Z012',desc:'Evaluación oral completa',cpms:'D0150 o D0120'},
+      {cie:'F000+/X60+',desc:'Psicoterapia (psicólogo)',cpms:'90806–.07'},
+    ],
+    rc89_sample:[
+      {cie:'Z340/Z348/Z349',cpms:'59401/.01/.02',proc:'Atención prenatal (CPN)',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z31.82',cpms:'99412.01/.02',proc:'Psicoprofilaxis / Estimulación prenatal',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z2982',cpms:'99199.17/.19',proc:'Suplementación hierro/micronutrientes',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z299',cpms:'99199.28',proc:'Profilaxis antiparasitaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z23x–Z27x',cpms:'90471/90472/90715/90714',proc:'Vacunas gestante (Td, Influenza, COVID...)',ind_min:1,ind_max:5,eje_min:1,eje_max:5},
+      {cie:'Z133',cpms:'96150.01–.06/.08',proc:'Tamizajes salud mental',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z010',cpms:'99173/92015',proc:'Agudeza visual / Refracción',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'O800/O801+',cpms:'59400/59409/59872',proc:'Atención obstétrica rutina / parto',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z12.4',cpms:'88141/87621/99402.06',proc:'Tamizaje cérvix / VPH',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z30x',cpms:'99402/.04',proc:'Consejería PPFF postparto',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Todos',cpms:'90806.07',proc:'Visita domiciliaria',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z515',cpms:'99489–.04',proc:'Cuidados paliativos',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'Z609',cpms:'99210/.03/.04',proc:'Servicio social',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+      {cie:'F000+/X60+',cpms:'90806–.07',proc:'Psicoterapia',ind_min:1,ind_max:1,eje_min:1,eje_max:1},
+    ]
+  }
+};
+
+function selectCodRC(el, cod) {
+  document.querySelectorAll('.cod-card').forEach(c => {
+    c.style.boxShadow = '';
+    c.style.transform = '';
+  });
+  const cc = COD_COLORS[cod];
+  el.style.boxShadow = `0 0 0 3px ${cc.border}, 0 6px 20px rgba(0,0,0,0.12)`;
+  el.style.transform = 'translateY(-3px)';
+  renderRCPanel(cod);
+}
+
+
+const PROF_DATA = {
+  EN: {
+    av:'EN', color:'#1d4ed8', bg:'#eff6ff', border:'#3b82f6',
+    nombre:'Enfermería General',
+    colegio:'CEP — Colegio de Enfermeros del Perú',
+    cod_resp: '6',
+    descripcion:'Realiza control CRED, suplementación, profilaxis, consejería integral y tamizajes. Firma su propio FUA por cada atención.',
+    codigos: [
+      {cod:'301', nombre:'Cuidado Integral del Niño', rango:'0–11a 11m 29d', color:'#dbeafe', tcolor:'#1d4ed8'},
+      {cod:'302', nombre:'Cuidado Integral del Adolescente', rango:'12–17a 11m 29d', color:'#dcfce7', tcolor:'#15803d'}
+    ],
+    fua_por_codigo: {
+      '301': {
+        anverso: [
+          {campo:'COD. PRESTA.', valor:'301', oblig:true, nota:'Según edad del paciente 0–11 años'},
+          {campo:'Peso (Kg)', valor:'Ej: 11.5', oblig:true, nota:'Obligatorio'},
+          {campo:'Talla (cm)', valor:'Ej: 85', oblig:true, nota:'Obligatorio'},
+          {campo:'CRED N°', valor:'N° de control (1, 2, 3...)', oblig:true, nota:'Número correlativo de control CRED'},
+          {campo:'TAP / EEDP / TEPSI', valor:'SI / NO', oblig:false, nota:'Marcar SI si se realizó prueba de desarrollo'},
+          {campo:'Consejería Integral', valor:'SI', oblig:true, nota:'Debe marcarse SÍ en toda atención'},
+          {campo:'Consejería Nutricional', valor:'SI si aplica', oblig:false, nota:'Si hay riesgo nutricional'},
+          {campo:'Tamizaje Salud Mental', valor:'NOR o PAT', oblig:true, nota:'Si PAT → registrar diagnóstico CIE-10 F/X/T (RC-34)'},
+          {campo:'Vacunas N° Dosis', valor:'Completar según esquema', oblig:false, nota:'BCG, Pentavalente, APO, Rotavirus, Neumococo, SPR...'},
+          {campo:'Diagnóstico 1 CIE-10', valor:'Z00.2 (examen rutina niño)', oblig:true, nota:'CIE-10 principal'},
+          {campo:'Diagnóstico 2 CIE-10', valor:'Z29.82 si suplementa hierro', oblig:false, nota:'Condicional'},
+          {campo:'Diagnóstico 3 CIE-10', valor:'Z29.9 si antiparasitaria', oblig:false, nota:'Condicional'},
+          {campo:'Responsable (código)', valor:'6 = Enfermera', oblig:true, nota:''},
+          {campo:'Firma y Sello', valor:'Firma propia del profesional', oblig:true, nota:'No compartir FUA'},
+        ],
+        reverso: [
+          {seccion:'Medicamentos', items:['Sulfato ferroso (suplementación hierro) → código SISMED + FF + CONCENTR + PRES + ENTR + DX','Albendazol 200mg / Mebendazol (antiparasitaria) → mismos campos','Retinol palmitato 100,000 UI (vitamina A < 2 años) → mismos campos','Multimicronutrientes / Sprinkles → mismos campos']},
+          {seccion:'Insumos (para hemoglobina)', items:['19698 — Microcubeta plástica hemoglobinómetro 10 uL | IND:1 EJE:1 DX:2','23445 — Lanceta retráctil pediátrica | IND:1 EJE:1 DX:2','11199 — Guante descartable ambidextro grande | IND:1 EJE:1 DX:2']},
+          {seccion:'Procedimientos', items:['85018 — Hemoglobina | IND:1 EJE:1 DX:2 RES:[valor numérico ej. 10.9] (RC-31 obligatorio)','90471 — Administración de inmunización si aplica | IND:1 EJE:1 DX:N']},
+          {seccion:'Sub-componente prestacional (CPMS)', items:['99382 — CRED 1–4 años (ó 99381/99383 según edad) | EJE:1 DX:1','99401 — Consejería integral | EJE:1 DX:1','99199.17 — Suplementación hierro | EJE:1 DX:2 (si aplica)','99199.19 — Multimicronutrientes | EJE:1 DX:2 (si aplica)','99199.28 — Profilaxis antiparasitaria | EJE:1 DX:3 (si aplica)','99199.27 — Vitamina A | EJE:1 DX:4 (si aplica < 2 años)','96110 — Tamizaje de desarrollo DSM | EJE:1 DX:1 (si aplica)']}
+        ],
+        errores:['❌ Usar 301 para paciente > 11 años → RC-01 bloquea','❌ No registrar resultado de hemoglobina en RES → RC-31 observa','❌ Tamizaje PAT sin diagnóstico F/X/T → RC-34 bloquea','❌ Registrar medicamento sin diagnóstico asociado (DX vacío)','❌ No completar CRED N° cuando es control de crecimiento y desarrollo']
+      },
+      '302': {
+        anverso: [
+          {campo:'COD. PRESTA.', valor:'302', oblig:true, nota:'Según edad 12–17 años'},
+          {campo:'Peso (Kg)', valor:'Ej: 52.0', oblig:true, nota:''},
+          {campo:'Talla (cm)', valor:'Ej: 155', oblig:true, nota:''},
+          {campo:'P.A. (mmHg)', valor:'Ej: 100/60', oblig:true, nota:''},
+          {campo:'Consejería Integral', valor:'SI', oblig:true, nota:''},
+          {campo:'Tamizaje Salud Mental', valor:'NOR o PAT', oblig:true, nota:'RC-34 si PAT → diagnóstico F/X/T obligatorio'},
+          {campo:'Vacunas', valor:'VPH, Td, Influenza si corresponde', oblig:false, nota:''},
+          {campo:'Diagnóstico 1 CIE-10', valor:'Z00.3 (examen desarrollo adolescente)', oblig:true, nota:''},
+          {campo:'Responsable (código)', valor:'6 = Enfermera', oblig:true, nota:''},
+          {campo:'Firma y Sello', valor:'Firma propia', oblig:true, nota:''},
+        ],
+        reverso: [
+          {seccion:'Medicamentos', items:['Sulfato ferroso / multimicronutrientes si anemia — DX correspondiente','Albendazol/Mebendazol si profilaxis antiparasitaria']},
+          {seccion:'Procedimientos', items:['85018 — Hemoglobina | RES:[valor] (si se toma muestra)','90471 — Administración inmunización si aplica']},
+          {seccion:'Sub-componente prestacional (CPMS)', items:['99385 — Control salud adolescente | EJE:1 DX:1','99401 — Consejería integral | EJE:1 DX:1','99199.28 — Profilaxis antiparasitaria | EJE:1 DX:N (si aplica)','96150.01 — Tamizaje violencia | EJE:1 DX:1','96150.03 — Tamizaje depresión | EJE:1 DX:1']}
+        ],
+        errores:['❌ Usar 302 para paciente de 18 años → RC-01 bloquea (usar 303)','❌ No marcar tamizaje salud mental en adolescentes']
+      }
+    }
+  },
+  TE: {
+    av:'TE', color:'#0369a1', bg:'#e0f2fe', border:'#38bdf8',
+    nombre:'Técnico en Enfermería',
+    colegio:'— (Técnico de Salud)',
+    cod_resp: '11',
+    descripcion:'Aplica inmunizaciones, entrega micronutrientes, toma hemoglobina y realiza profilaxis antiparasitaria. Registra con código 301 en nivel I-1.',
+    codigos: [
+      {cod:'301', nombre:'Cuidado Integral del Niño', rango:'0–11a (solo actividades autorizadas)', color:'#dbeafe', tcolor:'#1d4ed8'}
+    ],
+    fua_por_codigo: {
+      '301': {
+        anverso: [
+          {campo:'COD. PRESTA.', valor:'301', oblig:true, nota:'Solo actividades técnicas autorizadas'},
+          {campo:'Peso / Talla', valor:'Registrar si los toma', oblig:true, nota:''},
+          {campo:'Consejería Integral', valor:'SI si se brinda', oblig:false, nota:''},
+          {campo:'Tamizaje Salud Mental', valor:'NOR o PAT', oblig:true, nota:''},
+          {campo:'Vacunas N° Dosis', valor:'Anotar cada vacuna aplicada', oblig:true, nota:'BCG, Pentavalente, APO, Rotavirus, etc.'},
+          {campo:'Diagnóstico CIE-10', valor:'Z29.82 suplementación / Z23–Z27 vacunas', oblig:true, nota:''},
+          {campo:'Responsable (código)', valor:'11 = Técnico Enfermería', oblig:true, nota:''},
+          {campo:'Firma y Sello', valor:'Firma propia', oblig:true, nota:''},
+        ],
+        reverso: [
+          {seccion:'Medicamentos', items:['Multimicronutrientes (sprinkles) → SISMED + FF + PRES + ENTR + DX','Sulfato ferroso (si corresponde)','Albendazol / Mebendazol (profilaxis antiparasitaria)']},
+          {seccion:'Insumos', items:['Microcubeta, lanceta pediátrica, guante (si toma Hb)','Jeringas, agujas para vacunas según tipo']},
+          {seccion:'Procedimientos', items:['85018 — Hemoglobina | RES:[valor] si aplica','90460/90471 — Administración inmunizaciones | EJE según dosis']},
+          {seccion:'Sub-componente prestacional', items:['99199.19 — Multimicronutrientes | EJE:1 DX:1','99199.28 — Profilaxis antiparasitaria | EJE:1 DX:N','90460–90749 — Vacunas según esquema | EJE:1 c/u']}
+        ],
+        errores:['❌ Registrar consulta médica o consejería sin autorización','❌ No registrar la vacuna aplicada en el anverso','❌ No anotar resultado de hemoglobina en campo RES']
+      }
+    }
+  },
+  OB: {
+    av:'OB', color:'#be185d', bg:'#fdf2f8', border:'#ec4899',
+    nombre:'Obstetricia',
+    colegio:'COP — Colegio de Obstetras del Perú',
+    cod_resp: '5',
+    descripcion:'Realiza atención prenatal, control puerperal, consejería reproductiva y planificación familiar. Principal responsable del código 306.',
+    codigos: [
+      {cod:'306', nombre:'Cuidado Integral Prenatal', rango:'Gestante/Puérpera 9–59 años', color:'#fce7f3', tcolor:'#be185d'},
+      {cod:'303', nombre:'Cuidado Integral del Joven', rango:'18–29a (mujer no gestante)', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Cuidado Integral del Adulto', rango:'30–59a (mujer no gestante)', color:'#ffedd5', tcolor:'#c2410c'}
+    ],
+    fua_por_codigo: {
+      '306': {
+        anverso: [
+          {campo:'COD. PRESTA.', valor:'306', oblig:true, nota:'Solo gestantes/puérperas femeninas 9–59 años — RC-01'},
+          {campo:'Gestante', valor:'Marcar ✓', oblig:true, nota:'O Puérpera según caso'},
+          {campo:'Fecha Probable Parto', valor:'DD/MM/AAAA', oblig:true, nota:'RC-30 obliga fecha probable de parto'},
+          {campo:'Peso (Kg)', valor:'Ej: 62.0', oblig:true, nota:''},
+          {campo:'Talla (cm)', valor:'Ej: 158', oblig:true, nota:''},
+          {campo:'P.A. (mmHg)', valor:'Ej: 110/70', oblig:true, nota:''},
+          {campo:'IMC (Kg/M²)', valor:'Calcular', oblig:true, nota:''},
+          {campo:'CPN N°', valor:'N° de control prenatal', oblig:true, nota:''},
+          {campo:'Altura Uterina', valor:'cm según semanas', oblig:true, nota:''},
+          {campo:'Consejería Integral', valor:'SI', oblig:true, nota:''},
+          {campo:'Consejería Nutricional', valor:'SI', oblig:true, nota:''},
+          {campo:'Tamizaje Salud Mental', valor:'NOR o PAT', oblig:true, nota:'RC-34 si PAT'},
+          {campo:'N° Familiares Gest/Puerp.', valor:'N° de familiares en casa', oblig:false, nota:''},
+          {campo:'Diagnóstico 1 CIE-10', valor:'Z34.0–Z34.9 (supervisión embarazo)', oblig:true, nota:''},
+          {campo:'Diagnóstico 2 CIE-10', valor:'Z29.82 si suplementa hierro', oblig:false, nota:''},
+          {campo:'Responsable (código)', valor:'5 = Obstetriz', oblig:true, nota:''},
+          {campo:'Firma y Sello', valor:'Firma propia de la obstetriz', oblig:true, nota:''},
+        ],
+        reverso: [
+          {seccion:'Medicamentos', items:['Sulfato ferroso + ácido fólico → SISMED + FF + CONCENTR + PRES + ENTR + DX','Calcio carbonato → mismos campos','Otros según prescripción médica']},
+          {seccion:'Insumos', items:['Tira reactiva para glucosa / orina si se realiza','Lanceta, guante, algodón para toma de muestra']},
+          {seccion:'Procedimientos / Laboratorio', items:['85018 — Hemoglobina | RES:[valor] (RC-31)','82947 — Glucosa sérica si aplica | RES:[valor]','Ecografía obstétrica si se realiza en el establecimiento']},
+          {seccion:'Sub-componente prestacional (CPMS)', items:['99500 — Atención prenatal (CPN) | EJE:1 DX:1','99401 — Consejería integral | EJE:1 DX:1','99402.01 — Consejería signos de alarma gestación | EJE:1 DX:1','99402.02 — Consejería prevención y control de anemia | EJE:1 DX:2','99199.17 — Suplementación hierro | EJE:1 DX:2','96150.01 — Tamizaje violencia | EJE:1 DX:1','90471 — Vacuna Td/Influenza si aplica | EJE:1 DX:N']}
+        ],
+        errores:['❌ Registrar 306 a paciente NO gestante → RC-01 bloquea','❌ No completar fecha probable de parto → RC-30 bloquea','❌ No registrar hemoglobina con resultado numérico → RC-31 observa','❌ No registrar suplemento de hierro cuando se entrega','❌ Compartir FUA con la enfermera del mismo establecimiento']
+      },
+      '303': {
+        anverso: [
+          {campo:'COD. PRESTA.', valor:'303', oblig:true, nota:'Mujer joven NO gestante 18–29 años'},
+          {campo:'Peso / Talla / PA / IMC', valor:'Completar todos', oblig:true, nota:''},
+          {campo:'Consejería Integral + PPFF', valor:'SI si se brinda consejería reproductiva', oblig:true, nota:''},
+          {campo:'Tamizaje Salud Mental', valor:'NOR o PAT', oblig:true, nota:''},
+          {campo:'Diagnóstico 1 CIE-10', valor:'Z00.1 (examen periódico)', oblig:true, nota:''},
+          {campo:'Responsable (código)', valor:'5 = Obstetriz', oblig:true, nota:''},
+        ],
+        reverso: [
+          {seccion:'Sub-componente prestacional', items:['99395 — Evaluación periódica joven | EJE:1 DX:1','99402.04 — Consejería PPFF | EJE:1 DX:N (si aplica)','99401 — Consejería integral | EJE:1 DX:1','96150.01 — Tamizaje violencia | EJE:1 DX:1','Tamizaje cáncer cérvix 024 si 25–65 años']}
+        ],
+        errores:['❌ Usar 306 para mujer joven sin embarazo → RC-01 bloquea']
+      },
+      '304': {
+        anverso: [
+          {campo:'COD. PRESTA.', valor:'304', oblig:true, nota:'Mujer adulta NO gestante 30–59 años'},
+          {campo:'Peso / Talla / PA / IMC', valor:'Completar todos', oblig:true, nota:''},
+          {campo:'Consejería Integral + PPFF', valor:'SI', oblig:true, nota:''},
+          {campo:'Tamizaje Salud Mental', valor:'NOR o PAT', oblig:true, nota:''},
+          {campo:'Diagnóstico 1 CIE-10', valor:'Z00.1', oblig:true, nota:''},
+          {campo:'Responsable (código)', valor:'5 = Obstetriz', oblig:true, nota:''},
+        ],
+        reverso: [
+          {seccion:'Sub-componente prestacional', items:['99396 — Evaluación periódica adulto | EJE:1 DX:1','99402.04 — Consejería PPFF | EJE:1 DX:N','99401 — Consejería integral | EJE:1 DX:1','Tamizaje cáncer cérvix / mama si aplica (024, 025)']}
+        ],
+        errores:['❌ No registrar tamizaje de cáncer cuando corresponde por edad']
+      }
+    }
+  },
+  MD: {
+    av:'MD', color:'#1e40af', bg:'#eff6ff', border:'#3b82f6',
+    nombre:'Medicina General',
+    colegio:'CMP — Colegio Médico del Perú',
+    cod_resp: '1',
+    descripcion:'Realiza consulta externa, diagnóstico y tratamiento. Puede usar todos los códigos 301–306 según la edad del paciente.',
+    codigos: [
+      {cod:'301', nombre:'Cuidado Integral del Niño', rango:'0–11a', color:'#dbeafe', tcolor:'#1d4ed8'},
+      {cod:'302', nombre:'Cuidado Integral del Adolescente', rango:'12–17a', color:'#dcfce7', tcolor:'#15803d'},
+      {cod:'303', nombre:'Cuidado Integral del Joven', rango:'18–29a', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Cuidado Integral del Adulto', rango:'30–59a', color:'#ffedd5', tcolor:'#c2410c'},
+      {cod:'305', nombre:'Cuidado Integral Adulto Mayor', rango:'60+', color:'#ede9fe', tcolor:'#7c3aed'}
+    ],
+    fua_por_codigo: {
+      '301': {
+        anverso:[
+          {campo:'COD. PRESTA.', valor:'301', oblig:true, nota:'Niño 0–11 años'},
+          {campo:'Peso / Talla', valor:'Obligatorio', oblig:true, nota:''},
+          {campo:'CRED N° si control de salud', valor:'N° correlativo', oblig:false, nota:''},
+          {campo:'Consejería Integral', valor:'SI', oblig:true, nota:''},
+          {campo:'Tamizaje Salud Mental', valor:'NOR o PAT', oblig:true, nota:''},
+          {campo:'Diagnóstico CIE-10', valor:'Z00.2 control rutina / diagnóstico según motivo', oblig:true, nota:''},
+          {campo:'Responsable (código)', valor:'1 = Médico', oblig:true, nota:''},
+        ],
+        reverso:[
+          {seccion:'Medicamentos', items:['Medicamentos prescritos según diagnóstico + SISMED + FF + CONCENTR + PRES + ENTR + DX']},
+          {seccion:'Sub-componente prestacional', items:['99382/99383 — CRED 1–4a / 5–11a | EJE:1 DX:1 (si control CRED)','99401 — Consejería integral | EJE:1 DX:1','Procedimientos solicitados según diagnóstico']}
+        ],
+        errores:['❌ Médico firma FUA de enfermería o viceversa','❌ No registrar diagnóstico recuperativo cuando hay morbilidad']
+      },
+      '302': { anverso:[{campo:'COD. PRESTA.', valor:'302', oblig:true, nota:'12–17 años'},{campo:'Peso/Talla/PA', valor:'Completar', oblig:true, nota:''},{campo:'Tamizaje Salud Mental', valor:'NOR/PAT', oblig:true, nota:''},{campo:'Diagnóstico CIE-10', valor:'Z00.3 ó diagnóstico de morbilidad', oblig:true, nota:''},{campo:'Responsable (código)', valor:'1 = Médico', oblig:true, nota:''}], reverso:[{seccion:'Sub-componente', items:['99385 — Control salud adolescente | EJE:1','99401 — Consejería integral | EJE:1','Medicamentos según diagnóstico']}], errores:['❌ Diagnóstico no compatible con código 302 (RC-88)'] },
+      '303': { anverso:[{campo:'COD. PRESTA.', valor:'303', oblig:true, nota:'18–29 años'},{campo:'Peso/Talla/PA/IMC', valor:'Completar', oblig:true, nota:''},{campo:'Tamizaje Salud Mental', valor:'NOR/PAT', oblig:true, nota:''},{campo:'Diagnóstico CIE-10', valor:'Z00.1 ó morbilidad', oblig:true, nota:''},{campo:'Responsable (código)', valor:'1 = Médico', oblig:true, nota:''}], reverso:[{seccion:'Sub-componente', items:['99395 — Evaluación periódica joven | EJE:1','99401 — Consejería integral | EJE:1','Medicamentos/procedimientos según diagnóstico']}], errores:['❌ No registrar tamizajes requeridos por normativa'] },
+      '304': { anverso:[{campo:'COD. PRESTA.', valor:'304', oblig:true, nota:'30–59 años'},{campo:'Peso/Talla/PA/IMC', valor:'Completar', oblig:true, nota:''},{campo:'Tamizaje Salud Mental', valor:'NOR/PAT', oblig:true, nota:''},{campo:'Diagnóstico CIE-10', valor:'Z00.1 / I10X HTA / E11.9 DM / etc.', oblig:true, nota:''},{campo:'Responsable (código)', valor:'1 = Médico', oblig:true, nota:''}], reverso:[{seccion:'Sub-componente', items:['99396 — Evaluación periódica adulto | EJE:1','99401 — Consejería integral | EJE:1','Medicamentos crónicos según diagnóstico','Tamizajes CA si corresponde (024, 025)']}], errores:['❌ No registrar HTA o DM cuando son diagnósticos activos'] },
+      '305': { anverso:[{campo:'COD. PRESTA.', valor:'305', oblig:true, nota:'60+ años'},{campo:'Peso/Talla/PA/IMC', valor:'Completar', oblig:true, nota:''},{campo:'Evaluación Integral Adulto Mayor', valor:'SI', oblig:true, nota:''},{campo:'Tamizaje Salud Mental + deterioro cognitivo', valor:'NOR/PAT', oblig:true, nota:'RC-34 si PAT → diagnóstico F/G obligatorio'},{campo:'Diagnóstico CIE-10', valor:'Z00.1 / G30 Alzheimer / I10X / etc.', oblig:true, nota:''},{campo:'Responsable (código)', valor:'1 = Médico', oblig:true, nota:''}], reverso:[{seccion:'Sub-componente', items:['99397 — Evaluación periódica ≥65a | EJE:1','96150.07 — Tamizaje deterioro cognitivo | EJE:1','99401 — Consejería integral | EJE:1','Medicamentos según diagnóstico crónico']}], errores:['❌ No realizar valoración geriátrica en adultos mayores','❌ No registrar tamizaje de deterioro cognitivo (96150.07)'] }
+    }
+  },
+  OD: {
+    av:'OD', color:'#0e7490', bg:'#ecfeff', border:'#22d3ee',
+    nombre:'Odontología',
+    colegio:'COP — Colegio Odontológico del Perú',
+    cod_resp: '3',
+    descripcion:'Realiza evaluación bucal, prevención de caries y restauraciones. Usa cualquier código 301–306 según edad del paciente, siempre con su propio FUA.',
+    codigos: [
+      {cod:'301', nombre:'Niño 0–11a', rango:'CRED odontológico + prevención', color:'#dbeafe', tcolor:'#1d4ed8'},
+      {cod:'302', nombre:'Adolescente 12–17a', rango:'Evaluación + prevención', color:'#dcfce7', tcolor:'#15803d'},
+      {cod:'303', nombre:'Joven 18–29a', rango:'Evaluación + tratamiento', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Adulto 30–59a', rango:'Evaluación + tratamiento', color:'#ffedd5', tcolor:'#c2410c'},
+      {cod:'305', nombre:'Adulto Mayor 60+', rango:'Evaluación + rehabilitación', color:'#ede9fe', tcolor:'#7c3aed'},
+      {cod:'306', nombre:'Gestante', rango:'Salud bucal en embarazo', color:'#fce7f3', tcolor:'#be185d'}
+    ],
+    fua_por_codigo: {
+      '301': {
+        anverso:[{campo:'COD. PRESTA.', valor:'301', oblig:true, nota:''},{campo:'Peso / Talla', valor:'Completar', oblig:true, nota:''},{campo:'Consejería Integral + Salud Bucal', valor:'SI', oblig:true, nota:''},{campo:'Diagnóstico 1 CIE-10', valor:'Z01.20 (examen dental sin anomalía)', oblig:true, nota:''},{campo:'Responsable (código)', valor:'3 = Cirujano Dentista', oblig:true, nota:''}],
+        reverso:[{seccion:'Sub-componente prestacional', items:['020 — Salud bucal (evaluación oral completa) | EJE:1 DX:1','021 — Prevención de caries (Profilaxis, Flúor, Sellantes) | EJE:1 DX:1','911 — Instrucción higiene oral | EJE:1 DX:1','057/058 — Restauración dental si aplica | EJE:1 DX según caries']}],
+        errores:['❌ Registrar restauración sin diagnóstico de caries','❌ No registrar instrucción de higiene oral']
+      },
+      '306': {
+        anverso:[{campo:'COD. PRESTA.', valor:'306', oblig:true, nota:'Solo gestantes — verificar sexo F y condición gestante'},{campo:'Peso / Talla / PA', valor:'Completar', oblig:true, nota:''},{campo:'Consejería Integral Salud Bucal', valor:'SI', oblig:true, nota:''},{campo:'Diagnóstico 1 CIE-10', valor:'Z01.20 + Z34.x (gestante)', oblig:true, nota:''},{campo:'Responsable (código)', valor:'3 = Cirujano Dentista', oblig:true, nota:''}],
+        reverso:[{seccion:'Sub-componente', items:['020 — Evaluación oral completa | EJE:1','021 — Prevención caries gestante | EJE:1','911 — Instrucción higiene oral | EJE:1','057/058 — Restauración si hay caries activa']}],
+        errores:['❌ Usar 306 en mujer no gestante → RC-01 bloquea']
+      }
+    }
+  },
+  PS: {
+    av:'PS', color:'#7c3aed', bg:'#f5f3ff', border:'#8b5cf6',
+    nombre:'Psicología',
+    colegio:'CPsP — Colegio de Psicólogos del Perú',
+    cod_resp: '8',
+    descripcion:'Realiza tamizajes de salud mental, consejerías psicológicas y atención de trastornos. Usa código 906 o dentro del 301–306 como co-atención.',
+    codigos: [
+      {cod:'301', nombre:'Niño', rango:'Tamizaje desarrollo + salud mental', color:'#dbeafe', tcolor:'#1d4ed8'},
+      {cod:'302', nombre:'Adolescente', rango:'Tamizaje salud mental + consejería', color:'#dcfce7', tcolor:'#15803d'},
+      {cod:'303', nombre:'Joven', rango:'Tamizaje + consejería', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Adulto', rango:'Tamizaje + consejería', color:'#ffedd5', tcolor:'#c2410c'},
+      {cod:'305', nombre:'Adulto Mayor', rango:'Tamizaje cognitivo + depresión', color:'#ede9fe', tcolor:'#7c3aed'}
+    ],
+    fua_por_codigo: {
+      '302': {
+        anverso:[{campo:'COD. PRESTA.', valor:'302', oblig:true, nota:'Ó código 906 si es consulta psicológica recuperativa'},{campo:'Tamizaje Salud Mental', valor:'NOR o PAT — RC-34', oblig:true, nota:'Si PAT → diagnóstico F-code obligatorio'},{campo:'Diagnóstico CIE-10', valor:'Z13.3 (tamizaje salud mental) ó F-código si PAT', oblig:true, nota:''},{campo:'Responsable (código)', valor:'8 = Psicólogo', oblig:true, nota:''}],
+        reverso:[{seccion:'Sub-componente prestacional', items:['96150.01 — Tamizaje violencia | EJE:1 DX:1','96150.02 — Tamizaje alcohol y drogas | EJE:1 DX:1','96150.03 — Tamizaje depresión | EJE:1 DX:1','99402.09 — Consejería prevención riesgos salud mental | EJE:1 DX:1','Sesión psicológica si atención recuperativa']}],
+        errores:['❌ Tamizaje PAT sin registrar diagnóstico F-code → RC-34 bloquea','❌ No registrar sub-componente de tamizaje en reverso']
+      },
+      '305': {
+        anverso:[{campo:'COD. PRESTA.', valor:'305', oblig:true, nota:'60+ años'},{campo:'Tamizaje Salud Mental + deterioro cognitivo', valor:'NOR/PAT', oblig:true, nota:'96150.07 exclusivo de 305'},{campo:'Diagnóstico CIE-10', valor:'Z13.3 / F0x Demencia / F32 Depresión', oblig:true, nota:''},{campo:'Responsable (código)', valor:'8 = Psicólogo', oblig:true, nota:''}],
+        reverso:[{seccion:'Sub-componente', items:['96150.07 — Tamizaje deterioro cognitivo | EJE:1 DX:1','96150.03 — Tamizaje depresión | EJE:1 DX:1','99402.09 — Consejería salud mental | EJE:1 DX:1']}],
+        errores:['❌ No usar 96150.07 en adultos menores de 60 años']
+      }
+    }
+  },
+  NU: {
+    av:'NU', color:'#16a34a', bg:'#f0fdf4', border:'#22c55e',
+    nombre:'Nutrición',
+    colegio:'CNP — Colegio de Nutricionistas del Perú',
+    cod_resp: '10',
+    descripcion:'Realiza evaluación y consejería nutricional. Registra con código 906 o dentro del 301–306 como profesional no médico.',
+    codigos: [
+      {cod:'301', nombre:'Niño', rango:'Consejería nutricional + evaluación', color:'#dbeafe', tcolor:'#1d4ed8'},
+      {cod:'304', nombre:'Adulto', rango:'Evaluación nutricional adulto', color:'#ffedd5', tcolor:'#c2410c'},
+      {cod:'306', nombre:'Gestante', rango:'Consejería nutricional gestante', color:'#fce7f3', tcolor:'#be185d'}
+    ],
+    fua_por_codigo: {
+      '301': {
+        anverso:[{campo:'COD. PRESTA.', valor:'301 ó 906', oblig:true, nota:'906 si es consulta nutricional independiente'},{campo:'Peso / Talla', valor:'Completar', oblig:true, nota:''},{campo:'Consejería Nutricional', valor:'SI', oblig:true, nota:''},{campo:'Diagnóstico CIE-10', valor:'E43X/E44/E45 desnutrición / E660 obesidad / Z29.82', oblig:true, nota:''},{campo:'Responsable (código)', valor:'10 = Nutricionista', oblig:true, nota:''}],
+        reverso:[{seccion:'Sub-componente', items:['99403 — Consejería nutricional (niño riesgo nutricional) | EJE:1 DX:1','99401.13 — Consejería estilos de vida saludable | EJE:1 DX:1']}],
+        errores:['❌ No registrar diagnóstico nutricional cuando hay desnutrición u obesidad']
+      }
+    }
+  },
+  TS: {
+    av:'TS', color:'#0f766e', bg:'#f0fdfa', border:'#14b8a6',
+    nombre:'Trabajo Social',
+    colegio:'CTSP — Colegio de Trabajadores Sociales',
+    cod_resp: '7',
+    descripcion:'Realiza intervención social, visitas domiciliarias y atención de factores de riesgo social. Usa código 906 o dentro de 301–306.',
+    codigos: [
+      {cod:'301', nombre:'Niño', rango:'Factores de riesgo social', color:'#dbeafe', tcolor:'#1d4ed8'},
+      {cod:'303', nombre:'Joven', rango:'Intervención social joven', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Adulto', rango:'Intervención social adulto', color:'#ffedd5', tcolor:'#c2410c'}
+    ],
+    fua_por_codigo: {
+      '301': {
+        anverso:[{campo:'COD. PRESTA.', valor:'301 ó 906', oblig:true, nota:''},{campo:'Diagnóstico CIE-10', valor:'Z60.9 / Z62.x / Z63.x (problemas sociales)', oblig:true, nota:''},{campo:'Responsable (código)', valor:'7 = Trabajadora Social', oblig:true, nota:''}],
+        reverso:[{seccion:'Sub-componente', items:['99210 / 99210.03 / 99210.04 — Atención servicio social | EJE:1 DX:1','90806.07 — Visita domiciliaria si aplica | EJE:1 DX:1']}],
+        errores:['❌ No registrar diagnóstico social (Z60–Z65) cuando corresponde']
+      }
+    }
+  },
+  IM: {
+    av:'IM', color:'#c2410c', bg:'#fff7ed', border:'#f97316',
+    nombre:'Inmunizaciones',
+    colegio:'(Estrategia Sanitaria Nacional de Inmunizaciones)',
+    cod_resp: '6',
+    descripcion:'Aplica vacunas del esquema nacional. Registra en el FUA del código correspondiente a la edad del paciente.',
+    codigos: [
+      {cod:'301', nombre:'Niño 0–11a', rango:'Esquema vacunal completo pediátrico', color:'#dbeafe', tcolor:'#1d4ed8'},
+      {cod:'302', nombre:'Adolescente 12–17a', rango:'HPV, Td, Influenza', color:'#dcfce7', tcolor:'#15803d'},
+      {cod:'306', nombre:'Gestante', rango:'Td, Influenza, COVID', color:'#fce7f3', tcolor:'#be185d'}
+    ],
+    fua_por_codigo: {
+      '301': {
+        anverso:[{campo:'COD. PRESTA.', valor:'301', oblig:true, nota:''},{campo:'Vacunas N° Dosis', valor:'Anotar CADA vacuna y su N° de dosis', oblig:true, nota:'BCG, Pentavalente, APO, Rotavirus, Neumococo, SPR, Varicela, Influenza...'},{campo:'Diagnóstico CIE-10', valor:'Z23.x / Z24.x / Z25.x / Z27.x según vacuna', oblig:true, nota:'Ver tabla de CIE-10 por vacuna'},{campo:'Responsable (código)', valor:'6 = Enfermera / 11 = Tec. Enfermería', oblig:true, nota:''}],
+        reverso:[{seccion:'Insumos', items:['Jeringa 0.5mL por cada vacuna inyectable','Jeringa 1mL para BCG','Algodón, torunda, guantes descartables']},{seccion:'Procedimientos', items:['90460 — Admin. inmunización ≤18a 1er componente | EJE:1 DX:N por cada vacuna','90461 — Admin. inmunización ≤18a componentes adicionales | EJE:1 DX:N']}],
+        errores:['❌ No anotar N° de dosis en el anverso','❌ No registrar insumos (jeringa, algodón) en reverso','❌ CIE-10 de vacuna no coincide con vacuna aplicada','❌ Vacuna no disponible: registrar Z75.4 para exonerar RC-14']
+      }
+    }
+  },
+  TB: {
+    av:'TB', color:'#92400e', bg:'#fffbeb', border:'#fbbf24',
+    nombre:'Tuberculosis (ESNPCT)',
+    colegio:'Estrategia Sanitaria Nacional de Prevención y Control de TB',
+    cod_resp: '6',
+    descripcion:'Realiza tamizaje de TBC, captación de sintomáticos respiratorios y seguimiento de pacientes. Integrado en los códigos 302–305.',
+    codigos: [
+      {cod:'302', nombre:'Adolescente', rango:'Tamizaje TBC en adolescentes', color:'#dcfce7', tcolor:'#15803d'},
+      {cod:'303', nombre:'Joven', rango:'Tamizaje TBC', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Adulto', rango:'Tamizaje TBC adultos', color:'#ffedd5', tcolor:'#c2410c'},
+      {cod:'305', nombre:'Adulto Mayor', rango:'Tamizaje TBC adulto mayor', color:'#ede9fe', tcolor:'#7c3aed'}
+    ],
+    fua_por_codigo: {
+      '304': {
+        anverso:[{campo:'COD. PRESTA.', valor:'304', oblig:true, nota:''},{campo:'Diagnóstico CIE-10', valor:'Z13.6 (tamizaje TBC) ó A15.x (TBC activa)', oblig:true, nota:''},{campo:'Tamizaje Salud Mental', valor:'NOR/PAT si aplica', oblig:true, nota:''},{campo:'Responsable (código)', valor:'6 = Enfermera u otro según profesión', oblig:true, nota:''}],
+        reverso:[{seccion:'Procedimientos', items:['87555 — Prueba de tuberculina (PPD) si aplica | EJE:1 RES:[mm]','87116 — Cultivo micobacterias si aplica']},{seccion:'Sub-componente', items:['99401 — Consejería integral | EJE:1 DX:1','Seguimiento según protocolo ESNPCT']}],
+        errores:['❌ No registrar resultado de PPD en campo RES → RC-31 observa','❌ No registrar diagnóstico Z13.6 cuando es tamizaje preventivo']
+      }
+    }
+  },
+  PF: {
+    av:'PF', color:'#9333ea', bg:'#faf5ff', border:'#a855f7',
+    nombre:'Planificación Familiar',
+    colegio:'(Estrategia Sanitaria Nacional de Salud Sexual y Reproductiva)',
+    cod_resp: '5',
+    descripcion:'Brinda métodos anticonceptivos y consejería reproductiva. Se integra en códigos 302, 303, 304 y 306.',
+    codigos: [
+      {cod:'302', nombre:'Adolescente', rango:'Consejería + método', color:'#dcfce7', tcolor:'#15803d'},
+      {cod:'303', nombre:'Joven', rango:'Consejería + método', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Adulto', rango:'Consejería + método', color:'#ffedd5', tcolor:'#c2410c'},
+      {cod:'306', nombre:'Gestante/Puérpera', rango:'Consejería postparto', color:'#fce7f3', tcolor:'#be185d'}
+    ],
+    fua_por_codigo: {
+      '303': {
+        anverso:[{campo:'COD. PRESTA.', valor:'303', oblig:true, nota:''},{campo:'Diagnóstico CIE-10', valor:'Z30.0 (consejería PPFF) / Z30.1 (inicio método)', oblig:true, nota:''},{campo:'Responsable (código)', valor:'5 = Obstetriz', oblig:true, nota:''}],
+        reverso:[{seccion:'Medicamentos', items:['Método anticonceptivo entregado → SISMED + FF + CONCENTR + PRES + ENTR + DX','Ej: ACO (anticonceptivos orales), Inyectable mensual/trimestral, condones']},{seccion:'Sub-componente', items:['99402.04 — Consejería PPFF | EJE:1 DX:1','99401 — Consejería integral | EJE:1 DX:1']}],
+        errores:['❌ No registrar método entregado en reverso','❌ Usar Z30.x en código 301 (niño) → RC-88 bloquea']
+      }
+    }
+  },
+  VH: {
+    av:'VH', color:'#b91c1c', bg:'#fef2f2', border:'#ef4444',
+    nombre:'VIH / Sida',
+    colegio:'(Estrategia Sanitaria Nacional de ITS, VIH y Hepatitis)',
+    cod_resp: '1',
+    descripcion:'Manejo de VIH/Sida: profilaxis, tratamiento ARV y seguimiento. Se integra principalmente con código 306 y códigos recuperativos.',
+    codigos: [
+      {cod:'306', nombre:'Gestante con VIH', rango:'Profilaxis transmisión vertical', color:'#fce7f3', tcolor:'#be185d'},
+      {cod:'303', nombre:'Joven', rango:'Tamizaje y consejería VIH', color:'#d1fae5', tcolor:'#065f46'},
+      {cod:'304', nombre:'Adulto', rango:'Tratamiento ARV / consejería', color:'#ffedd5', tcolor:'#c2410c'}
+    ],
+    fua_por_codigo: {
+      '306': {
+        anverso:[{campo:'COD. PRESTA.', valor:'306', oblig:true, nota:'Gestante con VIH'},{campo:'Diagnóstico CIE-10', valor:'Z34.x + B24X (VIH sin especificar) o B20–B23', oblig:true, nota:''},{campo:'Responsable (código)', valor:'1 = Médico / 5 = Obstetriz', oblig:true, nota:''}],
+        reverso:[{seccion:'Medicamentos ARV', items:['ARV según protocolo TARGA → SISMED + FF + CONCENTR + PRES + ENTR + DX (código 026)','Sucedáneos leche materna si aplica (código 027)']},{seccion:'Sub-componente', items:['99402 — Consejería VIH | EJE:1 DX:1','74015 — Consejería/tratamiento ITS | EJE:1 DX:N','Prueba rápida VIH/VDRL si aplica en reverso']}],
+        errores:['❌ No registrar ARV en reverso cuando se prescribe','❌ No registrar diagnóstico B20–B24 cuando corresponde']
+      }
+    }
+  }
+};
+
+
+// =============================================
+// PATCH: Completar fua_por_codigo faltantes
+// =============================================
+(function(){
+
+// Helper para generar template base de anverso/reverso por codigo
+function mkBase(cod, codResp, profNombre) {
+  const names={301:'Niño (0–11a)',302:'Adolescente (12–17a)',303:'Joven (18–29a)',304:'Adulto (30–59a)',305:'Adulto Mayor (60+)',306:'Gestante/Puérpera'};
+  const cie={301:'Z00.2 / Z00.1',302:'Z00.3',303:'Z00.1',304:'Z00.1',305:'Z00.1',306:'Z34.0–Z34.9'};
+  const extra={
+    301:[{campo:'Peso / Talla',valor:'Completar',oblig:true,nota:'Obligatorio RC-14'},{campo:'CRED N°',valor:'N° correlativo',oblig:false,nota:'Si es control CRED'},{campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34: si PAT → diagnóstico F/X/T'}],
+    302:[{campo:'Peso / Talla / PA',valor:'Completar',oblig:true,nota:'Obligatorio RC-14'},{campo:'IMC',valor:'Calcular',oblig:true,nota:'≥12 años'},{campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'}],
+    303:[{campo:'Peso / Talla / PA / IMC',valor:'Completar',oblig:true,nota:'Obligatorio RC-14'},{campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'}],
+    304:[{campo:'Peso / Talla / PA / IMC',valor:'Completar',oblig:true,nota:'Obligatorio RC-14'},{campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'}],
+    305:[{campo:'Peso / Talla / PA / IMC',valor:'Completar',oblig:true,nota:'Obligatorio RC-14'},{campo:'Evaluación Integral Adulto Mayor',valor:'SI',oblig:true,nota:''},{campo:'Tamizaje Salud Mental + Cognitivo',valor:'NOR o PAT',oblig:true,nota:'96150.07 exclusivo 305'}],
+    306:[{campo:'Peso / Talla / PA',valor:'Completar',oblig:true,nota:'Obligatorio RC-14'},{campo:'Gestante / Puérpera',valor:'Marcar ✓',oblig:true,nota:'Verificar sexo F'},{campo:'Fecha Probable Parto',valor:'DD/MM/AAAA',oblig:true,nota:'RC-30 obligatorio'},{campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'}]
+  };
+  return {
+    anverso:[
+      {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:'Edad del paciente: '+names[cod]},
+      ...extra[cod],
+      {campo:'Diagnóstico 1 CIE-10',valor:cie[cod],oblig:true,nota:''},
+      {campo:'Responsable (código)',valor:codResp,oblig:true,nota:profNombre},
+      {campo:'Firma y Sello',valor:'Firma propia del profesional',oblig:true,nota:'No compartir FUA'}
+    ],
+    reverso:[
+      {seccion:'Sub-componente prestacional (CPMS)',items:['Registrar los CPMS correspondientes según actividades realizadas — ver pestaña Procedimientos CPMS','99401 — Consejería integral | EJE:1 DX:1','Procedimientos según código: ver RC-89 en pestaña Códigos 301–306']}
+    ],
+    errores:['❌ Código '+cod+' fuera de rango de edad del paciente → RC-01 bloquea','❌ No registrar procedimiento en reverso → RC-12 bloquea','❌ Tamizaje PAT sin diagnóstico F/X/T → RC-34 bloquea']
+  };
+}
+
+// ---- ODONTOLOGÍA: completar 302, 303, 304, 305 ----
+const OD_anverso_base = (cod, codCie) => [
+  {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:'Edad del paciente'},
+  {campo:'Peso / Talla',valor:'Completar',oblig:true,nota:'Obligatorio RC-14'},
+  {campo:'PA',valor:'Si >12 años',oblig:false,nota:''},
+  {campo:'Consejería Integral Salud Bucal',valor:'SI',oblig:true,nota:''},
+  {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+  {campo:'Diagnóstico 1 CIE-10',valor:codCie,oblig:true,nota:''},
+  {campo:'Responsable (código)',valor:'3 = Cirujano Dentista',oblig:true,nota:''},
+  {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:'No compartir FUA'}
+];
+const OD_reverso = [
+  {seccion:'Sub-componente prestacional',items:[
+    '020 — Salud bucal (evaluación oral completa) | EJE:1 DX:1 — CIE: Z01.20 o Z01.21',
+    '021 — Prevención de caries (Profilaxis, Flúor Barniz/Gel, Sellantes) | EJE:1 DX:1 — CIE: Z29.8',
+    '911 — Instrucción de Higiene Oral y Asesoría nutricional | EJE:1 DX:1 — CIE: Z76.8',
+    '057 — Restauración dental simple (1 superficie) | EJE:1–4 DX según caries — CIE: K02x',
+    '058 — Restauración dental compuesta (2+ superficies) | EJE:1–4 DX — CIE: K02x',
+    '059 — Extracción dental / Exodoncia | EJE:1–2 DX — CIE: K08x'
+  ]}
+];
+const OD_errores = (cod) => [
+  '❌ Código '+cod+' fuera de rango de edad → RC-01 bloquea',
+  '❌ Restauración sin diagnóstico de caries (K02x) → RC-88 bloquea',
+  '❌ No registrar IHO (911) cuando se realiza evaluación bucal',
+  '❌ No registrar resultado (RES) cuando se toma hemoglobina → RC-31'
+];
+
+PROF_DATA.OD.fua_por_codigo[302] = {
+  anverso: OD_anverso_base(302,'Z00.3 (examen adolescente) + Z01.20 (eval. oral)'),
+  reverso: OD_reverso,
+  errores: OD_errores(302)
+};
+PROF_DATA.OD.fua_por_codigo[303] = {
+  anverso: OD_anverso_base(303,'Z00.1 (examen joven) + Z01.20 (eval. oral)'),
+  reverso: OD_reverso,
+  errores: OD_errores(303)
+};
+PROF_DATA.OD.fua_por_codigo[304] = {
+  anverso: OD_anverso_base(304,'Z00.1 (examen adulto) + Z01.20 (eval. oral)'),
+  reverso: OD_reverso,
+  errores: OD_errores(304)
+};
+PROF_DATA.OD.fua_por_codigo[305] = {
+  anverso: [
+    {campo:'COD. PRESTA.',valor:'305',oblig:true,nota:'Adulto Mayor 60+ años'},
+    {campo:'Peso / Talla / PA / IMC',valor:'Completar todos',oblig:true,nota:'RC-14 obligatorio'},
+    {campo:'Evaluación Integral Adulto Mayor',valor:'SI',oblig:true,nota:''},
+    {campo:'Consejería Integral Salud Bucal',valor:'SI',oblig:true,nota:''},
+    {campo:'Tamizaje Salud Mental + Cognitivo',valor:'NOR o PAT',oblig:true,nota:'96150.07 exclusivo 305'},
+    {campo:'Diagnóstico 1 CIE-10',valor:'Z00.1 + Z01.20 (evaluación oral)',oblig:true,nota:''},
+    {campo:'Responsable (código)',valor:'3 = Cirujano Dentista',oblig:true,nota:''},
+    {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+  ],
+  reverso: [
+    {seccion:'Sub-componente prestacional',items:[
+      '020 — Evaluación oral completa | EJE:1 DX:1 — CIE: Z01.20',
+      '021 — Prevención caries / Profilaxis / Sellantes | EJE:1 DX:1',
+      '911 — IHO + Asesoría nutricional bucal | EJE:1 DX:1',
+      '900 — Prótesis dental removible (si indica, adulto mayor) | EJE:1 DX — CIE: K089.9',
+      '057/058 — Restauraciones si hay caries activa | EJE:1–4 DX',
+      '059 — Exodoncia si indica | EJE:1–2 DX'
+    ]}
+  ],
+  errores: ['❌ No indicar prótesis dental (900) cuando adulto mayor lo requiere','❌ No hacer evaluación integral geriátrica cuando aplica','❌ No registrar resultado hemoglobina en RES → RC-31']
+};
+
+// ---- PSICOLOGÍA: completar 301, 303, 304 ----
+const PS_reverso = (cod) => [{
+  seccion:'Sub-componente prestacional (CPMS)',items:[
+    '96150.01 — Tamizaje salud mental en violencia | EJE:1 DX:1',
+    '96150.02 — Tamizaje alcohol y drogas (≥12a) | EJE:1 DX:1',
+    '96150.03 — Tamizaje trastornos depresivos | EJE:1 DX:1',
+    '96150.04 — Tamizaje psicosis | EJE:1 DX:1',
+    '96150.05 — Tamizaje ansiedad | EJE:1 DX:1',
+    '96150.06 — Tamizaje riesgo suicida | EJE:1 DX:1',
+    cod===305?'96150.07 — Tamizaje deterioro cognitivo (EXCLUSIVO 305) | EJE:1 DX:1':'96150.08 — Tamizaje otras condiciones | EJE:1 DX:1',
+    '99402.09 — Consejería prevención riesgos salud mental | EJE:1 DX:1',
+    '90806 / 90806.01–.07 — Psicoterapia individual (si PAT) | EJE:1 DX:1',
+    '99210 / 99210.03 — Atención de servicio social complementario | EJE:1 DX:1'
+  ]
+}];
+const PS_errores = (cod) => [
+  '❌ Tamizaje PAT sin diagnóstico F000–F999 o X60–X84 → RC-34 bloquea',
+  '❌ Código '+cod+' fuera de rango de edad → RC-01 bloquea',
+  '❌ No registrar CPMS de tamizaje en reverso → RC-12 bloquea'
+];
+
+PROF_DATA.PS.fua_por_codigo[301] = {
+  anverso:[
+    {campo:'COD. PRESTA.',valor:'301',oblig:true,nota:'Niño 0–11 años'},
+    {campo:'Peso / Talla',valor:'Completar',oblig:true,nota:'RC-14'},
+    {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34: si PAT → F/X/T obligatorio'},
+    {campo:'Diagnóstico 1 CIE-10',valor:'Z13.3 (tamizaje salud mental) / F-código si PAT',oblig:true,nota:''},
+    {campo:'Responsable (código)',valor:'8 = Psicólogo',oblig:true,nota:''},
+    {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+  ],
+  reverso: PS_reverso(301),
+  errores: PS_errores(301)
+};
+PROF_DATA.PS.fua_por_codigo[303] = {
+  anverso:[
+    {campo:'COD. PRESTA.',valor:'303',oblig:true,nota:'Joven 18–29 años'},
+    {campo:'Peso / Talla / PA / IMC',valor:'Completar',oblig:true,nota:'RC-14'},
+    {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+    {campo:'Diagnóstico 1 CIE-10',valor:'Z13.3 / F-código si PAT',oblig:true,nota:''},
+    {campo:'Responsable (código)',valor:'8 = Psicólogo',oblig:true,nota:''},
+    {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+  ],
+  reverso: PS_reverso(303),
+  errores: PS_errores(303)
+};
+PROF_DATA.PS.fua_por_codigo[304] = {
+  anverso:[
+    {campo:'COD. PRESTA.',valor:'304',oblig:true,nota:'Adulto 30–59 años'},
+    {campo:'Peso / Talla / PA / IMC',valor:'Completar',oblig:true,nota:'RC-14'},
+    {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+    {campo:'Diagnóstico 1 CIE-10',valor:'Z13.3 / F-código si PAT',oblig:true,nota:''},
+    {campo:'Responsable (código)',valor:'8 = Psicólogo',oblig:true,nota:''},
+    {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+  ],
+  reverso: PS_reverso(304),
+  errores: PS_errores(304)
+};
+PROF_DATA.PS.fua_por_codigo[306] = {
+  anverso:[
+    {campo:'COD. PRESTA.',valor:'306',oblig:true,nota:'Gestante/Puérpera — solo femenino'},
+    {campo:'Peso / Talla / PA',valor:'Completar',oblig:true,nota:''},
+    {campo:'Fecha Probable Parto',valor:'DD/MM/AAAA',oblig:true,nota:'RC-30'},
+    {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+    {campo:'Diagnóstico 1 CIE-10',valor:'Z34.x + Z13.3 / F-código si PAT',oblig:true,nota:''},
+    {campo:'Responsable (código)',valor:'8 = Psicólogo',oblig:true,nota:''},
+    {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+  ],
+  reverso: PS_reverso(306),
+  errores: ['❌ 306 solo para mujeres gestantes → RC-01 bloquea', ...PS_errores(306)]
+};
+
+// ---- NUTRICIÓN: completar 302, 303, 304, 305, 306 ----
+const NU_reverso = (cod) => [{
+  seccion:'Sub-componente prestacional (CPMS)',items:[
+    '99403 — Consejería nutricional (riesgo nutricional) | EJE:1 DX:1 — CIE: E43X/E44/E45/E66',
+    '99401.02 — Consejería lactancia materna | EJE:1 DX:1 (si aplica)',
+    '99401.03 — Consejería alimentación complementaria | EJE:1 DX:1 (si aplica)',
+    '99401.13 — Consejería estilos de vida saludable | EJE:1 DX:1',
+    '99209 — Atención en nutrición | EJE:1 DX:1',
+    '99252 — Consejería nutricional especializada | EJE:1 DX:1 (si aplica)',
+    cod===306?'99402.02 — Consejería prevención y control de anemia en gestante | EJE:1 DX:1':''
+  ].filter(x=>x)
+}];
+const NU_anverso = (cod, nota) => [
+  {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota},
+  {campo:'Peso / Talla',valor:'Completar',oblig:true,nota:'RC-14'},
+  ...(cod>=303?[{campo:'PA / IMC',valor:'Completar',oblig:true,nota:'≥18 años'}]:[]),
+  {campo:'Consejería Nutricional',valor:'SI',oblig:true,nota:''},
+  {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+  {campo:'Diagnóstico 1 CIE-10',valor:cod===306?'Z34.x + diagnóstico nutricional':'Z00.1 / Z00.3 + diagnóstico nutricional si aplica',oblig:true,nota:''},
+  {campo:'Responsable (código)',valor:'10 = Nutricionista',oblig:true,nota:''},
+  {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+];
+[302,303,304,305,306].forEach(cod => {
+  const notas = {302:'Adolescente 12–17a',303:'Joven 18–29a',304:'Adulto 30–59a',305:'Adulto Mayor 60+',306:'Gestante/Puérpera'};
+  PROF_DATA.NU.fua_por_codigo[cod] = {
+    anverso: NU_anverso(cod, notas[cod]),
+    reverso: NU_reverso(cod),
+    errores: ['❌ No registrar diagnóstico nutricional (E43X/E44/E45/E66/E660) cuando hay desnutrición u obesidad','❌ Código '+cod+' fuera de rango → RC-01 bloquea','❌ No registrar CPMS 99209 o 99403 en reverso → RC-12 bloquea']
+  };
+});
+
+// ---- TRABAJO SOCIAL: completar 302, 303, 304 ----
+const TS_reverso = [{
+  seccion:'Sub-componente prestacional (CPMS)',items:[
+    '99210 — Atención de servicio social | EJE:1 DX:1 — CIE: Z60.9 / Z62.x / Z63.x',
+    '99210.03 — Atención domiciliaria de servicio social | EJE:1 DX:1',
+    '99210.04 — Atención grupal de servicio social | EJE:1 DX:1',
+    '90806.07 — Visita domiciliaria/escolar/laboral | EJE:1 DX:1',
+    '99341 — Visita domicilio para evaluación salud (si requiere) | EJE:1 DX:1',
+    '99402.09 — Consejería prevención riesgos | EJE:1 DX:1'
+  ]
+}];
+[302,303,304].forEach(cod => {
+  const notas={302:'Adolescente 12–17a',303:'Joven 18–29a',304:'Adulto 30–59a'};
+  const cie={302:'Z00.3 + Z60.9',303:'Z00.1 + Z60.9',304:'Z00.1 + Z60.9'};
+  PROF_DATA.TS.fua_por_codigo[cod] = {
+    anverso:[
+      {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:notas[cod]},
+      {campo:'Peso / Talla / PA',valor:'Completar',oblig:true,nota:'RC-14'},
+      {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+      {campo:'Diagnóstico 1 CIE-10',valor:cie[cod]+' (problema social)',oblig:true,nota:''},
+      {campo:'Responsable (código)',valor:'7 = Trabajadora Social',oblig:true,nota:''},
+      {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+    ],
+    reverso: TS_reverso,
+    errores:['❌ No registrar diagnóstico social (Z60–Z65) cuando corresponde','❌ Código '+cod+' fuera de rango → RC-01 bloquea']
+  };
+});
+// TS también puede hacer 302, 305, 306
+[302, 305, 306].forEach(cod => {
+  if(!PROF_DATA.TS.fua_por_codigo[cod]) {
+    const notas={302:'Adolescente 12–17a',305:'Adulto Mayor 60+',306:'Gestante/Puérpera'};
+    const cie={302:'Z00.3 + Z60.9',305:'Z00.1 + Z60.9',306:'Z34.x + Z60.9'};
+    PROF_DATA.TS.fua_por_codigo[cod] = {
+      anverso:[
+        {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:notas[cod]},
+        {campo:'Peso / Talla',valor:'Completar',oblig:true,nota:'RC-14'},
+        ...(cod===306?[{campo:'Fecha Probable Parto',valor:'DD/MM/AAAA',oblig:true,nota:'RC-30'}]:[]),
+        {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+        {campo:'Diagnóstico 1 CIE-10',valor:cie[cod],oblig:true,nota:''},
+        {campo:'Responsable (código)',valor:'7 = Trabajadora Social',oblig:true,nota:''},
+        {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+      ],
+      reverso: TS_reverso,
+      errores:['❌ No registrar diagnóstico social Z60–Z65','❌ Código '+cod+' fuera de rango → RC-01 bloquea']
+    };
+  }
+});
+// Add 302, 305, 306 to TS codigos list if not there
+if(!PROF_DATA.TS.codigos.find(c=>c.cod=='302'))
+  PROF_DATA.TS.codigos.push({cod:'302',nombre:'Adolescente 12–17a',rango:'Intervención social',color:'#dcfce7',tcolor:'#15803d'});
+if(!PROF_DATA.TS.codigos.find(c=>c.cod=='305'))
+  PROF_DATA.TS.codigos.push({cod:'305',nombre:'Adulto Mayor 60+',rango:'Intervención social',color:'#ede9fe',tcolor:'#7c3aed'});
+if(!PROF_DATA.TS.codigos.find(c=>c.cod=='306'))
+  PROF_DATA.TS.codigos.push({cod:'306',nombre:'Gestante/Puérpera',rango:'Intervención social',color:'#fce7f3',tcolor:'#be185d'});
+
+// ---- INMUNIZACIONES: completar 302, 306 ----
+const IM_reverso = (cod) => [
+  {seccion:'Insumos',items:[
+    'Jeringa 0.5mL por cada vacuna inyectable',
+    'Jeringa 1mL para BCG (código 301)',
+    'Algodón, torunda, guante descartable por vacuna',
+    'Cadena de frío verificada antes de la aplicación'
+  ]},
+  {seccion:'Procedimientos / Sub-componente',items:[
+    cod<=301?'90460 — Admin. inmunización ≤18a 1er componente | EJE:1 DX:N':'90471 — Admin. inmunización >18a 1er componente | EJE:1 DX:N',
+    cod<=301?'90461 — Admin. inmunización ≤18a componentes adicionales | EJE:1 DX:N':'90472 — Admin. inmunización >18a componentes adicionales | EJE:1 DX:N',
+    cod===306?'90715 — Vacuna Td (gestante) | EJE:1 DX: Z23.8':'',
+    cod===306?'90658 — Vacuna Influenza adulto (gestante) | EJE:1 DX: Z25.1':'',
+    '⚠ Vacuna no disponible: registrar Z75.4 para exonerar RC-14'
+  ].filter(x=>x)}
+];
+[302,306].forEach(cod => {
+  const vax={
+    302:['VPH (90649/90650) — HPV cuadrivalente/bivalente | 2–3 dosis — CIE: Z25.8','Td/Tdap (90714/90715) — Toxoide tetánico ≥7a | según esquema — CIE: Z23.8','Influenza (90657/90658) — Anual | CIE: Z25.1','SPR/SR (90707) — Si requiere refuerzo | CIE: Z27.4','Hepatitis B (90744/90746) — Si no completó esquema | CIE: Z24.6'],
+    306:['Td/Tdap (90714/90715) — 2 dosis durante embarazo — CIE: Z23.8','Influenza (90658) — 1 dosis anual en gestante — CIE: Z25.1','COVID-19 — Según disponibilidad — CIE: Z25.8','Hepatitis B (90746) — Si no tiene esquema completo — CIE: Z24.6']
+  };
+  const cie={302:'Z23.x–Z27.x según vacuna aplicada',306:'Z34.x + Z23.x–Z27.x según vacuna'};
+  const nota={302:'Adolescente 12–17a — vacunas del esquema national',306:'Gestante — vacunas obligatorias'};
+  PROF_DATA.IM.fua_por_codigo[cod] = {
+    anverso:[
+      {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:nota[cod]},
+      {campo:'Vacunas N° Dosis',valor:'Anotar CADA vacuna y dosis',oblig:true,nota:'Una fila por tipo de vacuna'},
+      ...(cod===306?[{campo:'Gestante / Puérpera',valor:'Marcar ✓',oblig:true,nota:''},{campo:'Fecha Probable Parto',valor:'DD/MM/AAAA',oblig:true,nota:'RC-30'}]:[]),
+      {campo:'Diagnóstico 1 CIE-10',valor:cie[cod],oblig:true,nota:'Ver tabla de CIE-10 por vacuna'},
+      {campo:'Responsable (código)',valor:'6 = Enfermera / 11 = Tec. Enfermería',oblig:true,nota:''},
+      {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+    ],
+    reverso:[
+      {seccion:'Vacunas a aplicar según esquema',items: vax[cod]},
+      ...IM_reverso(cod)
+    ],
+    errores:[
+      '❌ No anotar N° de dosis en anverso → RC-14 observa',
+      '❌ No registrar insumos (jeringa, algodón) en reverso → RC-12 bloquea',
+      '❌ CIE-10 no coincide con vacuna aplicada → RC-88 bloquea',
+      cod===306?'❌ Usar 306 en mujer no gestante → RC-01 bloquea':'❌ Código '+cod+' fuera de rango → RC-01 bloquea',
+      '❌ Vacuna no disponible sin registrar Z75.4 → RC-14 observa'
+    ]
+  };
+});
+
+// ---- TUBERCULOSIS: completar 302, 303, 305 ----
+const TB_reverso = [{
+  seccion:'Procedimientos / Sub-componente',items:[
+    '87555 — Prueba de tuberculina PPD | IND:1 EJE:1 DX:1 RES:[mm leído] — RC-31 obligatorio',
+    '87116 — Cultivo de micobacterias si aplica | EJE:1 DX:1',
+    '87003 — Baciloscopia (BK) | EJE:1 DX:1 RES: resultado',
+    '99401 — Consejería integral | EJE:1 DX:1',
+    '99402 — Consejería TBC / VIH | EJE:1 DX:1',
+    '99199.11 — Profilaxis TBC (quimioprofilaxis) si aplica | EJE:1 DX:1'
+  ]
+}];
+[302,303,305].forEach(cod => {
+  const notas={302:'Adolescente 12–17a',303:'Joven 18–29a',305:'Adulto Mayor 60+'};
+  const cie={302:'Z13.6 (tamizaje TBC) / A15.x (TBC activa)',303:'Z13.6 / A15.x',305:'Z13.6 / A15.x'};
+  PROF_DATA.TB.fua_por_codigo[cod] = {
+    anverso:[
+      {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:notas[cod]},
+      {campo:'Peso / Talla',valor:'Completar',oblig:true,nota:'RC-14'},
+      ...(cod>=303?[{campo:'PA / IMC',valor:'Completar',oblig:true,nota:''}]:[]),
+      {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+      {campo:'Diagnóstico 1 CIE-10',valor:cie[cod],oblig:true,nota:''},
+      {campo:'Responsable (código)',valor:'6 = Enfermera',oblig:true,nota:''},
+      {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+    ],
+    reverso: TB_reverso,
+    errores:[
+      '❌ No registrar resultado de PPD en campo RES → RC-31 observa',
+      '❌ Diagnóstico Z13.6 sin CPMS de tamizaje en reverso → RC-12 bloquea',
+      '❌ Código '+cod+' fuera de rango → RC-01 bloquea'
+    ]
+  };
+});
+// Añadir 302, 303, 305 a TB.codigos
+[{cod:'302',nombre:'Adolescente',color:'#dcfce7',tcolor:'#15803d'},{cod:'303',nombre:'Joven',color:'#d1fae5',tcolor:'#065f46'},{cod:'305',nombre:'Adulto Mayor',color:'#ede9fe',tcolor:'#7c3aed'}].forEach(c=>{
+  if(!PROF_DATA.TB.codigos.find(x=>x.cod==c.cod))
+    PROF_DATA.TB.codigos.push({...c,rango:'Tamizaje TBC'});
+});
+
+// ---- PLANIFICACIÓN FAMILIAR: completar 302, 304, 306 ----
+const PF_reverso = (cod) => [
+  {seccion:'Medicamentos',items:[
+    'Método anticonceptivo entregado → SISMED + FF + CONCENTR + PRES + ENTR + DX',
+    'ACO (anticonceptivo oral combinado) — Si se entrega',
+    'Inyectable mensual / trimestral — Si se entrega',
+    'Condones — Según cantidad indicada',
+    cod===306?'Método postparto seguro (DIU postparto / Implante) si aplica':''
+  ].filter(x=>x)},
+  {seccion:'Sub-componente prestacional',items:[
+    '99402.04 — Consejería PPFF | EJE:1 DX:1 — CIE: Z30.0 (consejería) / Z30.1 (inicio método)',
+    '99401 — Consejería integral | EJE:1 DX:1',
+    '99402 — Consejería PPFF extendida (~30 min) | EJE:1 DX:1',
+    cod===306?'99402.07 — Consejería PPFF posparto | EJE:1 DX:1':''
+  ].filter(x=>x)}
+];
+[302,304,306].forEach(cod=>{
+  const notas={302:'Adolescente 12–17a',304:'Adulto 30–59a',306:'Gestante/Puérpera'};
+  const cie={302:'Z30.0 / Z30.1 (consejería / inicio método)',304:'Z30.0 / Z30.1',306:'Z34.x + Z30.0 (PPFF posparto)'};
+  PROF_DATA.PF.fua_por_codigo[cod] = {
+    anverso:[
+      {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:notas[cod]},
+      {campo:'Peso / Talla',valor:'Completar',oblig:true,nota:'RC-14'},
+      ...(cod>=303||cod===306?[{campo:'PA / IMC',valor:'Completar',oblig:true,nota:''}]:[]),
+      ...(cod===306?[{campo:'Gestante / Puérpera',valor:'Marcar ✓',oblig:true,nota:''},{campo:'Fecha Probable Parto',valor:'DD/MM/AAAA',oblig:true,nota:'RC-30'}]:[]),
+      {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+      {campo:'Diagnóstico 1 CIE-10',valor:cie[cod],oblig:true,nota:''},
+      {campo:'Responsable (código)',valor:'5 = Obstetriz',oblig:true,nota:''},
+      {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+    ],
+    reverso: PF_reverso(cod),
+    errores:[
+      '❌ No registrar método anticonceptivo entregado en reverso → RC-12 bloquea',
+      '❌ Usar Z30.x con código 301 (niño) → RC-88 bloquea',
+      '❌ Código '+cod+' fuera de rango → RC-01 bloquea',
+      cod===306?'❌ 306 solo para mujeres gestantes → RC-01 bloquea':''
+    ].filter(x=>x)
+  };
+});
+// Add 302, 304 to PF.codigos
+[{cod:'302',nombre:'Adolescente',color:'#dcfce7',tcolor:'#15803d'},{cod:'304',nombre:'Adulto',color:'#ffedd5',tcolor:'#c2410c'}].forEach(c=>{
+  if(!PROF_DATA.PF.codigos.find(x=>x.cod==c.cod))
+    PROF_DATA.PF.codigos.push({...c,rango:'Consejería + método'});
+});
+
+// ---- VIH/SIDA: completar 303, 304 completamente ----
+const VH_reverso = (cod) => [
+  {seccion:'Procedimientos diagnósticos',items:[
+    '86703 / 86701 — Prueba rápida VIH (ELISA) | EJE:1 DX:1 RES:[reactivo/no reactivo]',
+    '86592 / 86593 — Prueba rápida sífilis (RPR/VDRL) | EJE:1 DX:1 RES:[valor]',
+    '87621 — PCR VPH si tamizaje cérvix | EJE:1 DX:1',
+    cod===304?'84152 — PSA cáncer próstata (hombres 50–75a) | EJE:1 DX:1':''
+  ].filter(x=>x)},
+  {seccion:'Medicamentos',items:[
+    'ARV según protocolo TARGA (si tratamiento activo) → SISMED + FF + CONCENTR + PRES + ENTR + DX',
+    'Profilaxis con cotrimoxazol si aplica',
+    'TARV en jóvenes y adultos según guía MINSA'
+  ]},
+  {seccion:'Sub-componente prestacional',items:[
+    '99401 — Consejería integral | EJE:1 DX:1',
+    '99216 — Consejería TBC/VIH extendida (~25 min) | EJE:1 DX:1',
+    '74015 — Consejería/tratamiento ITS | EJE:1 DX:1',
+    '99402.09 — Consejería prevención riesgos | EJE:1 DX:1'
+  ]}
+];
+[303,304].forEach(cod=>{
+  const notas={303:'Joven 18–29a',304:'Adulto 30–59a'};
+  const cie={303:'Z20.6 (exposición VIH) / B24X (VIH) / A53.9 (sífilis) / Z13.6 (tamizaje TBC)',304:'Z20.6 / B20–B23 / A53.9 / I10X si HTA comórbida'};
+  PROF_DATA.VH.fua_por_codigo[cod] = {
+    anverso:[
+      {campo:'COD. PRESTA.',valor:String(cod),oblig:true,nota:notas[cod]},
+      {campo:'Peso / Talla / PA / IMC',valor:'Completar',oblig:true,nota:'RC-14'},
+      {campo:'Tamizaje Salud Mental',valor:'NOR o PAT',oblig:true,nota:'RC-34'},
+      {campo:'Diagnóstico 1 CIE-10',valor:cie[cod],oblig:true,nota:''},
+      {campo:'Responsable (código)',valor:'1 = Médico / 5 = Obstetriz',oblig:true,nota:''},
+      {campo:'Firma y Sello',valor:'Firma propia',oblig:true,nota:''}
+    ],
+    reverso: VH_reverso(cod),
+    errores:[
+      '❌ No registrar resultado de prueba rápida VIH en campo RES → RC-31 observa',
+      '❌ No registrar ARV en reverso cuando se prescribe → RC-12 bloquea',
+      '❌ No registrar diagnóstico B20–B24 cuando hay VIH confirmado',
+      '❌ Código '+cod+' fuera de rango → RC-01 bloquea'
+    ]
+  };
+});
+// Add 303, 304 to VH.codigos
+[{cod:'303',nombre:'Joven',color:'#d1fae5',tcolor:'#065f46'},{cod:'304',nombre:'Adulto',color:'#ffedd5',tcolor:'#c2410c'}].forEach(c=>{
+  if(!PROF_DATA.VH.codigos.find(x=>x.cod==c.cod))
+    PROF_DATA.VH.codigos.push({...c,rango:'Tamizaje y tratamiento VIH'});
+});
+
+})(); // end IIFE patch
+
+
+// =============================================
+// RENDER PROFESION
+// =============================================
+
+function selectProf2(el, key) {
+  document.querySelectorAll('.ptag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderProfContent(key);
+}
+
+function renderProfContent(key) {
+  const p = PROF_DATA[key];
+  if (!p) return;
+  const area = document.getElementById('prof-content-area');
+
+  // Header card
+  let html = `
+  <div style="background:linear-gradient(135deg,${p.color} 0%,${p.border} 100%);border-radius:0 0 0 0;padding:16px 20px;color:white;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(255,255,255,0.2);">
+    <div style="width:50px;height:50px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Nunito,sans-serif;font-weight:900;font-size:16px;flex-shrink:0;">${p.av}</div>
+    <div>
+      <div style="font-family:Nunito,sans-serif;font-size:16px;font-weight:900;">${p.nombre}</div>
+      <div style="font-size:11.5px;opacity:0.85;margin-top:3px;">${p.colegio} &nbsp;|&nbsp; Responsable código: ${p.cod_resp}</div>
+      <div style="font-size:12px;margin-top:5px;">${p.descripcion}</div>
+    </div>
+  </div>
+  <div style="background:${p.bg};padding:10px 20px;border:2px solid ${p.border};border-top:none;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-radius:0 0 0 0;">
+    <span style="font-size:12px;font-weight:700;color:${p.color};">FUAs que puede generar:</span>`;
+
+  p.codigos.forEach(c => {
+    html += `<span onclick="showFuaDetail('${key}','${c.cod}')" id="codtab_${key}_${c.cod}" style="background:${c.color};color:${c.tcolor};border:2px solid ${c.tcolor};padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer;transition:all 0.14s;" onmouseover="this.style.filter='brightness(0.9)'" onmouseout="this.style.filter=''">${c.cod} – ${c.nombre}</span>`;
+  });
+
+  html += `</div>
+  <div style="border:2px solid ${p.border};border-top:none;border-radius:0 0 12px 12px;background:white;">
+    <div id="fua-detail-area" style="padding:0;">
+      <div style="padding:24px;text-align:center;color:#94a3b8;font-size:13px;">
+        ☝ Selecciona un código arriba para ver el detalle completo de llenado del FUA
+      </div>
+    </div>
+  </div>`;
+
+  area.innerHTML = html;
+
+  // Auto-open first code
+  if (p.codigos.length > 0) {
+    showFuaDetail(key, p.codigos[0].cod);
+  }
+}
+
+function showFuaDetail(profKey, cod) {
+  const p = PROF_DATA[profKey];
+  const data = p.fua_por_codigo[cod];
+  if (!data) return;
+
+  // Highlight active tab
+  p.codigos.forEach(c => {
+    const el = document.getElementById(`codtab_${profKey}_${c.cod}`);
+    if (el) el.style.fontWeight = c.cod === cod ? '900' : '700';
+    if (el) el.style.boxShadow = c.cod === cod ? `0 0 0 3px ${p.border}` : 'none';
+  });
+
+  let h = `<div style="padding:16px 18px;">`;
+
+  // AVISO FIRMA
+  h += `<div style="background:#fffbeb;border:1.5px solid #fbbf24;border-radius:8px;padding:9px 14px;font-size:12px;color:#92400e;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+    <span style="width:8px;height:8px;background:#f59e0b;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
+    <strong>Tu propio FUA, tu propia firma.</strong>&nbsp; Código prestacional: <strong style="font-size:14px;color:${p.color};">${cod}</strong> — No compartir con otros profesionales.
+  </div>`;
+
+  // ANVERSO
+  h += `<div style="font-family:Nunito,sans-serif;font-size:13px;font-weight:800;color:${p.color};margin-bottom:10px;display:flex;align-items:center;gap:6px;">📋 ANVERSO del FUA — Campos a rellenar</div>`;
+  h += `<table class="tbl" style="margin-bottom:16px;"><thead><tr><th>Campo</th><th>Qué escribir</th><th>Ejemplo / Valor</th><th>¿Obligatorio?</th></tr></thead><tbody>`;
+  data.anverso.forEach(f => {
+    h += `<tr><td><strong>${f.campo}</strong></td><td style="font-size:11.5px;color:#475569;">${f.nota||'—'}</td><td style="color:${p.color};font-weight:600;">${f.valor}</td><td>${f.oblig ? '<span class="tag tag-ok">SÍ</span>' : '<span style="background:#f1f5f9;color:#64748b;padding:2px 8px;border-radius:12px;font-size:10.5px;font-weight:700;">Cond.</span>'}</td></tr>`;
+  });
+  h += `</tbody></table>`;
+
+  // REVERSO
+  h += `<div style="font-family:Nunito,sans-serif;font-size:13px;font-weight:800;color:${p.color};margin-bottom:10px;display:flex;align-items:center;gap:6px;">🔄 REVERSO del FUA — Qué registrar</div>`;
+  data.reverso.forEach(sec => {
+    h += `<div style="background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:10px;border-left:3px solid ${p.border};">`;
+    h += `<div style="font-weight:700;font-size:12px;color:${p.color};margin-bottom:7px;">📌 ${sec.seccion}</div>`;
+    h += `<ul style="list-style:none;padding:0;margin:0;">`;
+    sec.items.forEach(it => {
+      h += `<li style="font-size:11.5px;padding:4px 0;border-bottom:1px solid #f1f5f9;display:flex;align-items:flex-start;gap:7px;line-height:1.5;"><span style="color:${p.border};font-size:14px;flex-shrink:0;">▶</span>${it}</li>`;
+    });
+    h += `</ul></div>`;
+  });
+
+  // ERRORES FRECUENTES
+  if (data.errores && data.errores.length) {
+    h += `<div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:12px 14px;margin-top:8px;">`;
+    h += `<div style="font-weight:800;font-size:12px;color:#b91c1c;margin-bottom:8px;">⚠ Errores frecuentes a evitar:</div>`;
+    data.errores.forEach(e => {
+      h += `<div style="font-size:11.5px;color:#7f1d1d;padding:3px 0;border-bottom:1px solid #fee2e2;">${e}</div>`;
+    });
+    h += `</div>`;
+  }
+
+  // Galería imágenes + PDF
+  const imgGallery = getGallery(profKey, cod);
+  if(imgGallery) h += imgGallery;
+
+  h += `</div>`;
+  document.getElementById('fua-detail-area').innerHTML = h;
+}
+
+// Init: show Enfermería
+renderProfContent('EN');
+
+
+// ACCORDION
+function togAcc(h) {
+  h.classList.toggle('open');
+  h.nextElementSibling.classList.toggle('open');
+}
+
+// CPMS DATA
+const cpmsData = [
+  {cpms:'99381.01',desc:'CRED neonato (atención integral del niño)',cod:'301',cie:'Z00.1/Z00.2',tope:'1'},
+  {cpms:'99381',desc:'CRED menor de 1 año',cod:'301',cie:'Z00.1/Z00.2',tope:'1'},
+  {cpms:'99382',desc:'CRED de 1 a 4 años',cod:'301',cie:'Z00.1/Z00.2',tope:'1'},
+  {cpms:'99383',desc:'CRED de 5 a 11 años',cod:'301',cie:'Z00.1/Z00.2',tope:'1'},
+  {cpms:'99385',desc:'Control de salud del adolescente',cod:'302',cie:'Z00.1/Z00.3',tope:'1'},
+  {cpms:'99395',desc:'Evaluación periódica adulto joven (18–39a)',cod:'303',cie:'Z00.1',tope:'1'},
+  {cpms:'99396',desc:'Evaluación periódica adulto (40–64a)',cod:'304',cie:'Z00.1',tope:'1'},
+  {cpms:'99397',desc:'Evaluación periódica geriátrica (65+)',cod:'305',cie:'Z00.1',tope:'1'},
+  {cpms:'99500',desc:'Atención prenatal (control)',cod:'306',cie:'Z34.x',tope:'1'},
+  {cpms:'99501',desc:'Control puerperal ambulatorio',cod:'306',cie:'Z39.x',tope:'1'},
+  {cpms:'99401',desc:'Consejería integral (~15 min)',cod:'301–306',cie:'Según diagnóstico',tope:'1'},
+  {cpms:'99401.01',desc:'Consejería en apego y comunicación',cod:'301',cie:'Z00.1',tope:'1'},
+  {cpms:'99401.03',desc:'Consejería en lactancia materna exclusiva',cod:'301',cie:'Z00.1',tope:'1'},
+  {cpms:'99401.05',desc:'Consejería en atención temprana del desarrollo',cod:'301',cie:'Z76.2',tope:'1'},
+  {cpms:'99401.07',desc:'Consejería en inmunizaciones',cod:'301–306',cie:'Z23–Z27',tope:'1'},
+  {cpms:'99401.13',desc:'Consejería en estilos de vida saludable',cod:'301–306',cie:'Varios',tope:'1'},
+  {cpms:'99401.16',desc:'Consejería en salud ocular',cod:'301–306',cie:'Z01.0',tope:'1'},
+  {cpms:'99401.18',desc:'Consejería en salud bucal',cod:'301–306',cie:'Varios',tope:'1'},
+  {cpms:'99402.04',desc:'Consejería en planificación familiar (PPFF)',cod:'302–306',cie:'Z30.x',tope:'1'},
+  {cpms:'99402.09',desc:'Consejería de prevención de riesgos en salud mental',cod:'301–306',cie:'Z13.3',tope:'1'},
+  {cpms:'99199.17',desc:'Suplementación con hierro',cod:'301–306',cie:'Z29.82',tope:'1'},
+  {cpms:'99199.19',desc:'Suplementación de multimicronutrientes',cod:'301–306',cie:'Z29.82',tope:'1'},
+  {cpms:'99199.27',desc:'Suplementación vitamina A',cod:'301',cie:'Z29.81',tope:'1'},
+  {cpms:'99199.28',desc:'Profilaxis antiparasitaria',cod:'301–306',cie:'Z29.9',tope:'1'},
+  {cpms:'90460',desc:'Admin. inmunización hasta 18a - 1er componente',cod:'301–306',cie:'Z23–Z27',tope:'5'},
+  {cpms:'90461',desc:'Admin. inmunización hasta 18a - componentes adicionales',cod:'301–306',cie:'Z23–Z27',tope:'5'},
+  {cpms:'90471',desc:'Admin. inmunización (+18a) - 1ra vacuna',cod:'301–306',cie:'Z23–Z27',tope:'5'},
+  {cpms:'90472',desc:'Admin. inmunización (+18a) - vacunas adicionales',cod:'301–306',cie:'Z23–Z27',tope:'5'},
+  {cpms:'90585',desc:'Vacuna BCG (tuberculosis)',cod:'301',cie:'Z23.2',tope:'1'},
+  {cpms:'90657/90658',desc:'Vacuna influenza (pediátrica/adulta)',cod:'301–306',cie:'Z25.1',tope:'1'},
+  {cpms:'90669/90670',desc:'Vacuna neumocócica conjugada (PCV7/PCV13)',cod:'301–302',cie:'Z23.6',tope:'1'},
+  {cpms:'90681/90680',desc:'Vacuna rotavirus (2 ó 3 dosis)',cod:'301',cie:'Z23.8',tope:'1'},
+  {cpms:'90707',desc:'Vacuna SPR (sarampión-parotiditis-rubéola)',cod:'301–302',cie:'Z27.x',tope:'1'},
+  {cpms:'90713/90712',desc:'Vacuna polio IPV/OPV',cod:'301',cie:'Z23.5',tope:'1'},
+  {cpms:'90715',desc:'Vacuna Tdap (≥7 años)',cod:'302–306',cie:'Z23.1',tope:'1'},
+  {cpms:'90714',desc:'Toxoide Td (≥7 años)',cod:'302–306',cie:'Z23.1',tope:'1'},
+  {cpms:'90744/90746',desc:'Vacuna hepatitis B pediátrica/adulta',cod:'301–306',cie:'Z24.6',tope:'1'},
+  {cpms:'90649/90650',desc:'Vacuna HPV (cuadrivalente/bivalente)',cod:'302–303',cie:'Z23.8',tope:'1'},
+  {cpms:'90716',desc:'Vacuna varicela (viva)',cod:'301–302',cie:'Z23.8',tope:'1'},
+  {cpms:'90717',desc:'Vacuna fiebre amarilla',cod:'301–306',cie:'Z24.4',tope:'1'},
+  {cpms:'96110',desc:'Tamizaje de desarrollo (DSM estandarizado)',cod:'301',cie:'Z00.1/Z00.2',tope:'1'},
+  {cpms:'96150.01',desc:'Tamizaje salud mental en violencia',cod:'301–306',cie:'Z13.3',tope:'1'},
+  {cpms:'96150.02',desc:'Tamizaje salud mental en alcohol y drogas',cod:'302–306',cie:'Z13.3',tope:'1'},
+  {cpms:'96150.03',desc:'Tamizaje en trastornos depresivos',cod:'301–306',cie:'Z13.3',tope:'1'},
+  {cpms:'96150.04',desc:'Tamizaje en psicosis',cod:'301–306',cie:'Z13.3',tope:'1'},
+  {cpms:'96150.07',desc:'Tamizaje deterioro cognitivo (adulto mayor)',cod:'305',cie:'Z13.3',tope:'1'},
+  {cpms:'99173',desc:'Prueba de agudeza visual, cuantitativa bilateral',cod:'301–306',cie:'Z01.0',tope:'1'},
+  {cpms:'92015',desc:'Determinación de estado de refracción',cod:'301–306',cie:'Z01.0',tope:'1'},
+  {cpms:'99411.01/02',desc:'Atención Temprana del Desarrollo (ATD)',cod:'301',cie:'Z76.2',tope:'1'},
+  {cpms:'87177.01',desc:'Estudio parasitológico en heces x3',cod:'301',cie:'Z00.1/Z00.2',tope:'1'},
+  {cpms:'87178',desc:'Test de Graham',cod:'301',cie:'Z00.1/Z00.2',tope:'1'},
+  {cpms:'99431.01',desc:'Identificación de hipoacusia',cod:'301',cie:'Z00.1',tope:'1'},
+  {cpms:'99431.02',desc:'Identificación de catarata congénita',cod:'301',cie:'Z00.1',tope:'1'},
+  {cpms:'36416',desc:'Colección de sangre capilar (dedo, talón, oreja)',cod:'301',cie:'Z13.5/6/8',tope:'1'},
+  {cpms:'99502',desc:'Visita domiciliaria para cuidado neonatal',cod:'301',cie:'Z74.3',tope:'1'},
+  {cpms:'90806.07',desc:'Visita (domiciliaria, escolar, laboral)',cod:'301–306',cie:'Cualquiera',tope:'1'},
+  {cpms:'99489.01–04',desc:'Cuidados paliativos',cod:'301–306',cie:'Z51.5',tope:'1'},
+  {cpms:'99210/99210.03/04',desc:'Atención de servicio social',cod:'301–306',cie:'Z60.9',tope:'1'},
+  {cpms:'57510',desc:'Colposcopia (solo I-3 o I-4)',cod:'303–305',cie:'Z12.4',tope:'1'},
+];
+
+function renderCPMS(data) {
+  const tbody = document.getElementById('cpms-body');
+  if(!tbody) return;
+  tbody.innerHTML = data.map(r => `
+    <tr>
+      <td>${r.cpms}</td>
+      <td>${r.desc}</td>
+      <td style="white-space:nowrap"><span class="tag" style="background:#eff6ff;color:#1d4ed8;">${r.cod}</span></td>
+      <td style="font-size:11px;color:var(--texto2)">${r.cie}</td>
+      <td style="text-align:center"><span class="tag tag-a">${r.tope}</span></td>
+    </tr>`).join('');
+}
+
+function filtrarCPMS() {
+  const q = document.getElementById('buscar-cpms').value.toLowerCase();
+  const filtered = q ? cpmsData.filter(r => r.cpms.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q) || r.cod.toLowerCase().includes(q)) : cpmsData;
+  renderCPMS(filtered);
+}
+
+// INIT
+// Safe init after DOM ready
+window.addEventListener('DOMContentLoaded', function() {
+  var ni1 = document.querySelector('.nivel-card.ni1');
+  if(ni1) selectNivel(1, ni1);
+  renderCPMS(cpmsData);
+  renderProfContent('EN');
+});
+
+// =============================================
+// DATOS RC POR CODIGO
+// =============================================
+
+
+
+function renderRCPanel(cod) {
+  const d = RC_DATA[cod];
+  const cc = COD_COLORS[cod];
+  const codNames = {301:'Niño',302:'Adolescente',303:'Joven',304:'Adulto',305:'Adulto Mayor',306:'Prenatal'};
+  const area = document.getElementById('rc-panel-area');
+
+  const tagY = `<span style="background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:800;">S</span>`;
+  const tagN = `<span style="background:#fef2f2;color:#b91c1c;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:800;">N</span>`;
+  const tagX = `<span style="background:${cc.bg};color:${cc.hdr};padding:2px 10px;border-radius:10px;font-size:11px;font-weight:900;">✓</span>`;
+  const tagD = `<span style="background:#f1f5f9;color:#94a3b8;padding:2px 8px;border-radius:10px;font-size:11px;">—</span>`;
+
+  function mkTag(v){ return v==='X'?tagX:v==='S'?tagY:v==='N'?tagN:tagD; }
+
+  let h = `<div class="fade" style="margin-top:0;">`;
+
+  // RC-01
+  h += `
+  <div style="background:white;border-radius:0 0 0 0;border:2px solid ${cc.border};border-top:none;padding:16px 18px;margin-bottom:0;">
+    <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:${cc.hdr};margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+      📊 RC-01: Criterios de registro por edad, sexo y condición
+    </div>
+    <table class="tbl">
+      <thead><tr><th>CÓDIGO</th><th>PRESTACIÓN</th><th>ETAPA</th><th>EDAD MÍN.</th><th>EDAD MÁX.</th><th>SEXO</th><th>HOSP.</th><th>GESTANTE</th><th>PUÉRPERA</th><th>NO GEST.</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:${cc.hdr};font-size:16px;">${cod}</strong></td>
+          <td>C.I. del ${codNames[cod]}</td>
+          <td>${d.rc01.etapa}</td>
+          <td>${d.rc01.edadMin}</td>
+          <td>${d.rc01.edadMax}</td>
+          <td><span style="background:${cc.bg};color:${cc.hdr};padding:2px 10px;border-radius:10px;font-size:11px;font-weight:800;">${d.rc01.sexo==='A'?'Ambos':d.rc01.sexo==='F'?'Femenino':'Masculino'}</span></td>
+          <td>${mkTag(d.rc01.hosp)}</td>
+          <td>${mkTag(d.rc01.gest)}</td>
+          <td>${mkTag(d.rc01.puerp)}</td>
+          <td>${mkTag(d.rc01.noGest)}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>`;
+
+  // RC-04
+  h += `
+  <div style="background:white;border:2px solid ${cc.border};border-top:none;padding:14px 18px;margin-bottom:0;">
+    <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:${cc.hdr};margin-bottom:10px;">🏁 RC-04: Destino del asegurado habilitado</div>
+    <table class="tbl">
+      <thead><tr><th>ALTA</th><th>CITADO</th><th>HOSPITALIZADO</th><th>REF. EMERG.</th><th>REF. C. EXT.</th><th>REF. AP. DX</th><th>CONTRARREFERIDO</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>${mkTag(d.rc04.alta)}</td>
+          <td>${mkTag(d.rc04.citado)}</td>
+          <td>${mkTag(d.rc04.hosp)}</td>
+          <td>${mkTag(d.rc04.refEmerg)}</td>
+          <td>${mkTag(d.rc04.refCext)}</td>
+          <td>${mkTag(d.rc04.refApDx)}</td>
+          <td>${mkTag(d.rc04.contrarref)}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>`;
+
+  // RC-12
+  h += `
+  <div style="background:white;border:2px solid ${cc.border};border-top:none;padding:14px 18px;margin-bottom:0;">
+    <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:${cc.hdr};margin-bottom:8px;">💊 RC-12: Registro obligatorio de medicamentos e insumos/procedimientos</div>
+    <div style="background:#fef2f2;border-left:3px solid #ef4444;border-radius:6px;padding:8px 12px;font-size:12.5px;color:#7f1d1d;">
+      ⛔ <strong>Acción:</strong> ${d.rc12.accion} &nbsp;|&nbsp; Med/Insumos: ${mkTag(d.rc12.med)} &nbsp;|&nbsp; Ap.Dx/Proc: ${mkTag(d.rc12.proc)}
+    </div>
+  </div>`;
+
+  // RC-14
+  h += `
+  <div style="background:white;border:2px solid ${cc.border};border-top:none;padding:14px 18px;margin-bottom:0;">
+    <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:${cc.hdr};margin-bottom:10px;">📋 RC-14: Actividades preventivas obligatorias (Cuadro N°7)</div>
+    <table class="tbl">
+      <thead><tr><th>Criterio / Diagnóstico</th><th>Actividad preventiva obligatoria</th><th>Acción si falta</th></tr></thead>
+      <tbody>
+        ${d.rc14.map(r=>`<tr><td style="color:#475569;font-size:11.5px;">${r.criterio}</td><td style="font-weight:600;">${r.actividad}</td><td><span style="background:#fef2f2;color:#b91c1c;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:700;">${r.accion}</span></td></tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+
+  // RC-20
+  h += `
+  <div style="background:white;border:2px solid ${cc.border};border-top:none;padding:14px 18px;margin-bottom:0;">
+    <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:${cc.hdr};margin-bottom:8px;">👩‍⚕️ RC-20: Consistencia de procedimientos según perfil profesional</div>
+    <div style="background:${cc.light};border-left:3px solid ${cc.border};border-radius:6px;padding:8px 12px;font-size:12.5px;color:${cc.hdr};">
+      ${d.rc20}
+    </div>
+  </div>`;
+
+  // RC-88
+  h += `
+  <div style="background:white;border:2px solid ${cc.border};border-top:none;padding:14px 18px;margin-bottom:0;">
+    <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:${cc.hdr};margin-bottom:10px;">🔗 RC-88: Consistencia entre diagnósticos CIE-10 y procedimientos CPMS</div>
+    <table class="tbl">
+      <thead><tr><th>CIE-10</th><th>Descripción</th><th>CPMS requerido(s)</th></tr></thead>
+      <tbody>
+        ${d.rc88.map(r=>`<tr><td style="font-weight:700;color:${cc.hdr};font-size:11px;white-space:nowrap;">${r.cie}</td><td style="font-size:12px;">${r.desc}</td><td style="font-size:11px;color:#475569;">${r.cpms}</td></tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+
+  // RC-89
+  h += `
+  <div style="background:white;border:2px solid ${cc.border};border-top:none;border-radius:0 0 12px 12px;padding:14px 18px;margin-bottom:16px;">
+    <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:${cc.hdr};margin-bottom:10px;">
+      📐 RC-89: Topes de procedimientos habilitados (IND / EJE)
+      <span style="font-size:11px;font-weight:400;color:#64748b;margin-left:8px;">OBJETIVO: Regla de Consistencia N°89 — Denomin.: Registro condicionado de procedimientos según curso de vida</span>
+    </div>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>CIE-10</th>
+          <th>CPMS</th>
+          <th>PROCEDIMIENTO</th>
+          <th style="text-align:center;">IND<br><span style="font-weight:400;font-size:10px;">mín</span></th>
+          <th style="text-align:center;">IND<br><span style="font-weight:400;font-size:10px;">máx</span></th>
+          <th style="text-align:center;">EJE<br><span style="font-weight:400;font-size:10px;">mín</span></th>
+          <th style="text-align:center;">EJE<br><span style="font-weight:400;font-size:10px;">máx</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${d.rc89_sample.map(r=>`
+        <tr>
+          <td style="font-size:11px;color:${cc.hdr};font-weight:700;white-space:nowrap;">${r.cie}</td>
+          <td style="font-size:11px;font-weight:700;">${r.cpms}</td>
+          <td style="font-size:11.5px;">${r.proc}</td>
+          <td style="text-align:center;"><span style="background:${cc.bg};color:${cc.hdr};padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700;">${r.ind_min}</span></td>
+          <td style="text-align:center;"><span style="background:${cc.bg};color:${cc.hdr};padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700;">${r.ind_max}</span></td>
+          <td style="text-align:center;"><span style="background:${cc.bg};color:${cc.hdr};padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700;">${r.eje_min}</span></td>
+          <td style="text-align:center;"><span style="background:${cc.bg};color:${cc.hdr};padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700;">${r.eje_max}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div style="background:#fef9c3;border-radius:6px;padding:8px 12px;margin-top:10px;font-size:11.5px;color:#713f12;border-left:3px solid #eab308;">
+      ⚡ <strong>Acción RC-89:</strong> Habilita el registro de los CPMS según diagnóstico y código prestacional. Observa si se incumple el tope máximo o mínimo de los campos IND y EJE.
+    </div>
+  </div>`;
+
+  h += `</div>`;
+  area.innerHTML = h;
+  area.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// Auto-open code 301 on tab load
+document.addEventListener('DOMContentLoaded', function() {
+  var firstCard = document.querySelector('.cod-card.c301');
+  if(firstCard) selectCodRC(firstCard, 301);
+});
+
+</script>
+</body>
+</html>
